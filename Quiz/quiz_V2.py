@@ -10,7 +10,6 @@ total_questions = 2
 
 print('Começando...')
 
-# Dicionário de perguntas e respostas
 questions = {
     "Quem desenvolveu o jogo Grand Theft Auto (GTA)?": {
         "opcoes": ["A) Rockstar Games", "B) Ubisoft", "C) Activision", "D) EA"],
@@ -22,7 +21,7 @@ questions = {
     }
 }
 
-# Loop para iterar sobre as perguntas
+# Loop para iterar sobre as perguntas, manipulando o objeto questions
 for index, (pergunta, detalhes) in enumerate(questions.items(), start=1):
     print(f'\nPergunta {index}/{total_questions}:')
     print(pergunta)
