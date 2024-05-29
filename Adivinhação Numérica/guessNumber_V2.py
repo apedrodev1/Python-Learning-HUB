@@ -63,7 +63,7 @@ while nAttempts < maxAttempts:
             else:
                 print(f'Não foi desta vez! O número procurado é um pouco maior do que {answerUser}.')
     
-    print(f"N° de tentativas: {nChoices}")
+    print(f"N° de tentativas: {nAttempts}")
     print(f"Tentativas anteriores: {previousGuesses}")
 
 if nAttempts == maxAttempts and answerUser != randomNumber:
