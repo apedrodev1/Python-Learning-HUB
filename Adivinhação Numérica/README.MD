@@ -30,14 +30,11 @@ Experiência de Jogo Melhorada: Mensagens mais precisas tornam o jogo mais envol
 
 
 
--guessNumber_V2.py
+- guessNumber_V2.py
 
 
-
-
-  <p align="center">
-
-    ---
-
+  ---
+  
+<p align="center">
   Esse README fornece uma descrição clara do projeto, seus objetivos, tecnologias utilizadas e como utilizá-lo, juntamente com os devidos créditos ao criador original do projeto.
 </p>
