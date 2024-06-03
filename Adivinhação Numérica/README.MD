@@ -13,6 +13,9 @@ Sendo uma reprodução de um jogo infantil, disponível no YouTube, criado pelo 
 ## Melhorias propostas em guessNumber.py:
 
 
+
+
+
 Adicionar Níveis de Dificuldade: Permita que o usuário escolha um nível de dificuldade que ajustará a faixa de números.
 Limitar o Número de Tentativas: Defina um número máximo de tentativas que o jogador pode fazer.
 Histórico de Palpites: Armazene e exiba os palpites anteriores do jogador.
