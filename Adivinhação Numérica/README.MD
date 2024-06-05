@@ -10,7 +10,7 @@ Sendo uma reprodução de um jogo infantil, disponível no YouTube, criado pelo 
 - Clone o repositório... 
 
 
-## Melhorias propostas em guessNumber.py:
+## Melhorias propostas em guessNumber_V2.py:
 
 
 
