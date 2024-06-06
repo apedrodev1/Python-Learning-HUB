@@ -12,23 +12,23 @@ Sendo uma reprodução de um jogo infantil, disponível no YouTube, criado pelo 
 
 ## Melhorias propostas em guessNumber_V2.py:
 
+- Adicionar Níveis de Dificuldade: Permita que o usuário escolha um nível de dificuldade que ajustará a faixa de números.
 
+- Limitar o Número de Tentativas: Defina um número máximo de tentativas que o jogador pode fazer.
 
+- Histórico de Palpites: Armazene e exiba os palpites anteriores do jogador.
 
+- Mensagem Final com Feedback: Forneça uma mensagem final ao jogador com o número de tentativas e uma avaliação de desempenho.
 
-Adicionar Níveis de Dificuldade: Permita que o usuário escolha um nível de dificuldade que ajustará a faixa de números.
-Limitar o Número de Tentativas: Defina um número máximo de tentativas que o jogador pode fazer.
-Histórico de Palpites: Armazene e exiba os palpites anteriores do jogador.
-Mensagem Final com Feedback: Forneça uma mensagem final ao jogador com o número de tentativas e uma avaliação de desempenho.
-
-Função Principal main:
-
+-Função Principal main:
 Encapsulamos o código principal dentro de uma função main. Isso melhora a estrutura do código e facilita a reutilização e testes.
 
-Feedback Granular: Os jogadores recebem informações mais detalhadas sobre a proximidade do seu palpite, ajudando-os a ajustar suas estratégias.
+-Feedback Granular: Os jogadores recebem informações mais detalhadas sobre a proximidade do seu palpite, ajudando-os a ajustar suas estratégias.
 Experiência de Jogo Melhorada: Mensagens mais precisas tornam o jogo mais envolvente e desafiador.
 
-# Layout do projeto:
+</br>
+## Layout do projeto:
+
 - guessNumber.py
 
 
