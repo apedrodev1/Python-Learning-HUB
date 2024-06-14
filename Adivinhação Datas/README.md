@@ -13,19 +13,19 @@ Sendo uma reprodução de um jogo infantil japonês, disponível no YouTube, cri
 ## Como utilizar: 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/apedrodev1/Python-Learning-HUB/tree/main/Pedra%20Papel%20Tesoura
+   git clone https://github.com/apedrodev1/Python-Learning-HUB/tree/main/Adivinha%C3%A7%C3%A3o%20Datas
   
 2. Abra o console da sua IDE.
 
 3. Navegue até o diretório do projeto:
     ```bash
-   cd Adivinhação Palavras
+   cd Adivinhação Datas
 4. Execute o jogo com o seguinte comando:
      ```bash
      termoo.py
 </br>
 
-# Melhorias propostas em rock_paper_scissor_V2.py:
+# Melhorias propostas em termoo_V2.py:
 </br>
 
 ## 1 - :
@@ -36,7 +36,7 @@ Sendo uma reprodução de um jogo infantil japonês, disponível no YouTube, cri
 ## Layout do projeto:
 </br>
 <p align="center"> 
-<img src="https://github.com/apedrodev1/Python-Learning-HUB/assets/104085801/54d75725-723e-4867-9901-d3b8d02d67cf"
+<img src=""
 <\p>
 
 
