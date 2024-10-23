@@ -43,10 +43,18 @@ while True:
     aluno = Student(str(input('Digite o nome do Aluno: ')))
     aluno.fillMarks() 
 
+    print(f'Boletim de {aluno.name}')
+    print('#############################')
+    print(f'{"Notas":<10} | {"Valores":>10}')
+    print('-----------------------------')
 
-    print(f'Notas de {aluno.name}: {aluno.marks}')
-    print(f'Média: {aluno.final_mark:.2f}')
-    print(f'Situação: {aluno.condition}')
+    
+    for i, nota in enumerate(aluno.marks, 1):
+        print(f'Nota {i:<7} | {nota:>10.2f}')
+
+    print('-----------------------------')
+    print(f'{"Média":<10} | {aluno.final_mark:>10.2f}')
+    print(f'{"Situação":<10} | {aluno.condition:>10}')
 
     continuar = input('Deseja adicionar outro aluno? (S/N): ').lower()
     if continuar == 'n':
