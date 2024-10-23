@@ -9,10 +9,12 @@ class Student:
     def fillMarks(self):
         try:
             qtd_marks = int(input('Quantas notas deseja inserir? '))
+            i = 0
             for _ in range(qtd_marks):
+                i += 1 
                 while True:
                     try:
-                        nota = float(input(f'Digite a nota de {self.name}: '))
+                        nota = float(input(f'Digite a nota {i} de {self.name}: '))
                         self.marks.append(nota)
                         break
                     except ValueError:
