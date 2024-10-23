@@ -1,0 +1,1 @@
+Diretório destinado aos meus estudos em Python
