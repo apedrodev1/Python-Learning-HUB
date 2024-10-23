@@ -1,4 +1,4 @@
-# Gerador de senha
+# Pedra, papel, tesoura! 
 
 Sendo uma reprodução de um jogo infantil japonês, disponível no YouTube, criado pelo canal [Iury Rosal](https://www.youtube.com/watch?v=kO_lUkeQm4c) e disponibilizado no [repositório do GitHub](https://github.com/iuryrosal/projetos-python/tree/main/level-a/03).
 
