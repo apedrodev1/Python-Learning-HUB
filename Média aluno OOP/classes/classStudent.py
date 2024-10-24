@@ -1,3 +1,5 @@
+from functions import calculate_media, check_condition
+
 class Student:
     def __init__(self, name):
         self.name = name
@@ -5,36 +7,18 @@ class Student:
         self.final_mark = 0
         self.condition = ''
 
-    
-    def fillMarks(self):
+    def fill_marks(self):
         try:
             qtd_marks = int(input('Quantas notas deseja inserir? '))
-            i = 0
-            for _ in range(qtd_marks):
-                i += 1 
+            for i in range(1, qtd_marks + 1):
                 while True:
-                    #remover os inputs apos entrada dos dados - fazer
                     try:
                         nota = float(input(f'Digite a nota {i} de {self.name}: '))
                         self.marks.append(nota)
                         break
                     except ValueError:
                         print("Por favor, insira um número válido.")
-            self.calcMedia()  
+            self.final_mark = calculate_media(self.marks)
+            self.condition = check_condition(self.final_mark)
         except ValueError:
-            print("Por favor, insira um número válido.")    
-
-
-    def calcMedia(self):
-        if self.marks:
-            self.final_mark = sum(self.marks) / len(self.marks)
-
-            if self.final_mark >= 7:
-                self.condition = 'Aprovado'
-            else:
-                self.condition = 'Reprovado'
-
-            return self.condition
-        else:
-            print('Nenhuma nota foi inserida.')
-            return None
+            print("Por favor, insira um número válido.")
