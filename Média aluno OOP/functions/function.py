@@ -4,7 +4,7 @@ def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 # MPODE SER MÉTODO NA CLASSE STUDENT
-def calculate_media(marks):
+def calculate_media_arithmetic(marks):
     if marks:
         return sum(marks) / len(marks)
     else:
