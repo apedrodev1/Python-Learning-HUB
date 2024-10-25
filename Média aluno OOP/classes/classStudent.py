@@ -1,4 +1,4 @@
-from functions import calculate_media, check_condition
+from functions.function import calculate_media, check_condition
 
 class Student:
     def __init__(self, name):
@@ -7,6 +7,7 @@ class Student:
         self.final_mark = 0
         self.condition = ''
 
+    # PODE SER FUNCTION STANDALONE 
     def fill_marks(self):
         try:
             qtd_marks = int(input('Quantas notas deseja inserir? '))
