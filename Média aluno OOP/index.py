@@ -6,7 +6,7 @@ while True:
     clear_screen()
     
     aluno = Student(str(input('Digite o nome do Aluno: ')))
-    aluno.fillMarks()
+    aluno.fill_marks()
 
     print(f'Boletim de {aluno.name}')
     print('#############################')
