@@ -1,5 +1,5 @@
 from classes.classStudent import Student
-from functions.function import clear_screen
+from functions.function import clear_screen, fill_marks
 
 while True:
 
