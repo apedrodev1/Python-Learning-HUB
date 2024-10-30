@@ -2,14 +2,13 @@ from classes.classStudent import Student
 from functions.function import clear_screen, fill_marks
 
 while True:
-
-    clear_screen()
+    
     
     aluno_nome = input('Digite o nome do Aluno: ')
     
     if aluno_nome.isalpha():
         aluno = Student(aluno_nome)
-        aluno.fill_marks()
+        fill_marks(aluno)  
 
         print(f'Boletim de {aluno.name}')
         print('#############################')
@@ -26,7 +25,7 @@ while True:
         aluno.marks.clear()
 
         continuar = input('Deseja adicionar outro aluno? (S/N): ').lower()
+        clear_screen() # ver 
         if continuar == 'n':
             print('Encerrando o programa...')
             break
-    
