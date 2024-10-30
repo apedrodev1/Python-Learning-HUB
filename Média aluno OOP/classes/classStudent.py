@@ -5,9 +5,9 @@ class Student:
         self.final_mark = 0
         self.condition = ''
 
-    def calculate_media_arithmetic(marks):
-        if marks:
-            return sum(marks) / len(marks)
+    def calculate_media_arithmetic(self):
+        if self.marks:
+            return sum(self.marks) / len(self.marks)
         else:
             print('Nenhuma nota foi inserida.')
         return 0
@@ -22,5 +22,5 @@ class Student:
 #     else: 
 
     
-    def check_condition(final_mark):
-        return 'Aprovado' if final_mark >= 7 else 'Reprovado'
+    def check_condition(self):
+        return 'Aprovado' if self.final_mark >= 7 else 'Reprovado'
