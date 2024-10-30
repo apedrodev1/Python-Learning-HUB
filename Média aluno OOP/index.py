@@ -2,8 +2,7 @@ from classes.classStudent import Student
 from functions.function import clear_screen, fill_marks
 
 while True:
-    
-    
+  
     aluno_nome = input('Digite o nome do Aluno: ')
     
     if aluno_nome.isalpha():
@@ -24,8 +23,13 @@ while True:
 
         aluno.marks.clear()
 
-        continuar = input('Deseja adicionar outro aluno? (S/N): ').lower()
-        clear_screen() # ver 
-        if continuar == 'n':
-            print('Encerrando o programa...')
-            break
+    else:
+        print('Por favor, insira um nome válido contendo apenas letras.')
+        continue  
+
+    continuar = input('Deseja adicionar outro aluno? (S/N): ').lower()
+    clear_screen()  
+    if continuar == 'n':
+        print('Encerrando o programa... Até a próxima vez!')
+    
+        break  
