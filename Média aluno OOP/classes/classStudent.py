@@ -1,6 +1,7 @@
 class Student:
-    def __init__(self, name):
+    def __init__(self, name, passing_mark):
         self.name = name
+        self.passing_mark = passing_mark
         self.marks = []
         self.final_mark = 0
         self.condition = ''
@@ -23,4 +24,4 @@ class Student:
 
     
     def check_condition(self):
-        return 'Aprovado' if self.final_mark >= 7 else 'Reprovado'
+        return 'Aprovado' if self.final_mark >= self.passing_mark else 'Reprovado'
