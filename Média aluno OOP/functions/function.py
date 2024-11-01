@@ -18,9 +18,9 @@ def fill_marks(self):
     for i in range(1, qtd_marks + 1):
         while True: 
             try:
-                nota = float(input(f'Digite a nota {i} de {self.name}: '))
-                if 0 <= nota <= 10:
-                    self.marks.append(nota)
+                grade = float(input(f'Digite a nota {i} de {self.name}: ')) #trocar nota para outro nome mark confudiria, achar sinonimo
+                if 0 <= grade <= 10:
+                    self.marks.append(grade)
                     break
 
                 else:
