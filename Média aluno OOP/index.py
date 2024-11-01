@@ -25,8 +25,8 @@ while True:
         print(f'{"Notas":<12} | {"Valores":>10}')
         print('-----------------------------')
 
-        for i, nota in enumerate(aluno.marks, 1):
-            print(f'Nota {i:<7} | {nota:>10.2f}')
+        for i, grade in enumerate(aluno.marks, 1):
+            print(f'Nota {i:<7} | {grade:>10.2f}')
 
         print('-----------------------------')
         print(f'{"Média Necessária":<15} | {aluno.final_mark:>10.2f}') #1 caractere a direita a mais, ver alinhamento mais tarde
