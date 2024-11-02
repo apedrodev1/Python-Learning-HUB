@@ -2,55 +2,46 @@ from classes.classStudent import Student
 from functions.function import clear_screen, fill_marks
 
 while True:
-    aluno_nome = input('Digite o nome do Aluno: ')
+    student_name = input('Enter the student\'s name: ')
     
-    # verifica:  nome do aluno
-    if aluno_nome.isalpha():  
+    # Validate student name
+    if student_name.isalpha():  
         while True:
             try:
-                passing_mark = float(input("Digite a média necessária para aprovação (entre 0 e 10): "))
-                if 0 <= passing_mark <= 10:  
+                passing_grade = float(input("Enter the required average for passing (between 0 and 10): "))
+                if 0 <= passing_grade <= 10:  
                     break  
                 else:
-                    print("A média deve estar entre 0 e 10. Tente novamente.")
+                    print("The average must be between 0 and 10. Please try again.")
             except ValueError:
-                print("Por favor, insira um número válido para a média.")
+                print("Please enter a valid number for the average.")
         
-        # decide se será aritmética ou ponderada
-        while True:
-            media_type = input("Escolha o tipo de média: Aritmética (A) ou Ponderada (P): ").upper()
-            if media_type in ('A', 'P'):
-                is_weighted = (media_type == 'P')
-                break
-            else:
-                print("Por favor, escolha 'A' para Aritmética ou 'P' para Ponderada.")
+        student = Student(student_name, passing_grade)  
+        fill_marks(student) 
 
-        aluno = Student(aluno_nome, passing_mark, is_weighted)  
-        fill_marks(aluno) 
-
-        # Exibe boletim
-        print(f'Boletim de {aluno.name}')
+        # Display the report card
+        print(f'Report card for {student.name}')
         print('#############################')
-        print(f'{"Notas":<12} | {"Valores":>10}')
+        print(f'{"Grades":<12} | {"Values":>10}')
         print('-----------------------------')
 
-        for i, grade in enumerate(aluno.marks, 1):
-            print(f'Nota {i:<7} | {grade:>10.2f}')
+        for i, grade in enumerate(student.marks, 1):
+            print(f'Grade {i:<7} | {grade:>10.2f}')
 
         print('-----------------------------')
-        print(f'{"Média Necessária":<15} | {aluno.passing_mark:>10.2f}')
-        print(f'{"Média do Aluno ":<15} | {aluno.final_mark:>10.2f}')
+        print(f'{"Required Average":<15} | {student.final_mark:>10.2f}')
+        print(f'{"Student\'s Average":<15} | {student.final_mark:>10.2f}')
         print('-----------------------------')
-        print(f'{"Situação":<15} | {aluno.condition:>10}')
+        print(f'{"Status":<15} | {student.condition:>10}')
 
-        aluno.marks.clear()  # Limpa as notas após exibição
+        student.marks.clear()  # Clears marks after display
 
     else:
-        print('Por favor, insira um nome válido contendo apenas letras.')
+        print('Please enter a valid name containing only letters.')
         continue  
 
-    continuar = input('Deseja adicionar outro aluno? (S/N): ').lower()
+    continue_input = input('Do you want to add another student? (Y/N): ').lower()
     clear_screen()  
-    if continuar == 'n':
-        print('Encerrando o programa... Até a próxima vez!')
+    if continue_input == 'n':
+        print('Closing the program... See you next time!')
         break  
