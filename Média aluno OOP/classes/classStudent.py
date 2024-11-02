@@ -1,27 +1,26 @@
 class Student:
-    def __init__(self, name, passing_mark, is_weighted=False):  
+    def __init__(self, name, passing_grade):
         self.name = name
-        self.passing_mark = passing_mark
-        self.is_weighted = is_weighted  
+        self.passing_grade = passing_grade
         self.marks = []
-        self.weighted_marks = []  # Adiciona lista para pesos
         self.final_mark = 0
         self.condition = ''
+        self.weighted_marks = []
+        self.is_weighted = False
 
-    def calculate_media_arithmetic(self):
+    def calculate_arithmetic_mean(self):
         if self.marks:
             return sum(self.marks) / len(self.marks)
         else:
-            print('Nenhuma nota foi inserida.')
-            return 0
-
-    def calculate_weighted_media(self):
+            print('No grades were entered.')
+        return 0
+    
+    def calculate_weighted_mean(self):
         if self.marks and self.weighted_marks:
-            weighted_sum = sum(m * w for m, w in zip(self.marks, self.weighted_marks))
+            weighted_sum = sum(mark * weight for mark, weight in zip(self.marks, self.weighted_marks))
             return weighted_sum / sum(self.weighted_marks)
-        else:
-            print('Pesos ou notas ausentes para cálculo ponderado.')
-            return 0
-
+        print('No grades or weights were entered.')
+        return 0
+    
     def check_condition(self):
-        return 'Aprovado' if self.final_mark >= self.passing_mark else 'Reprovado'
+        return 'Passed' if self.final_mark >= self.passing_grade else 'Failed'
