@@ -4,7 +4,7 @@ from functions.function import clear_screen, fill_marks
 while True:
     aluno_nome = input('Digite o nome do Aluno: ')
     
-    # Verificar se o nome do aluno é válido
+    # verifica:  nome do aluno
     if aluno_nome.isalpha():  
         while True:
             try:
@@ -16,7 +16,16 @@ while True:
             except ValueError:
                 print("Por favor, insira um número válido para a média.")
         
-        aluno = Student(aluno_nome, passing_mark)  
+        # decide se será aritmética ou ponderada
+        while True:
+            media_type = input("Escolha o tipo de média: Aritmética (A) ou Ponderada (P): ").upper()
+            if media_type in ('A', 'P'):
+                is_weighted = (media_type == 'P')
+                break
+            else:
+                print("Por favor, escolha 'A' para Aritmética ou 'P' para Ponderada.")
+
+        aluno = Student(aluno_nome, passing_mark, is_weighted)  
         fill_marks(aluno) 
 
         # Exibe boletim
@@ -29,7 +38,7 @@ while True:
             print(f'Nota {i:<7} | {grade:>10.2f}')
 
         print('-----------------------------')
-        print(f'{"Média Necessária":<15} | {aluno.final_mark:>10.2f}') #1 caractere a direita a mais, ver alinhamento mais tarde
+        print(f'{"Média Necessária":<15} | {aluno.passing_mark:>10.2f}')
         print(f'{"Média do Aluno ":<15} | {aluno.final_mark:>10.2f}')
         print('-----------------------------')
         print(f'{"Situação":<15} | {aluno.condition:>10}')
