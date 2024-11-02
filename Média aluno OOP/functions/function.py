@@ -3,7 +3,7 @@ import os
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def fill_marks(self):
+def fill_marks(student):
     while True:
         try:
             qtd_marks = int(input('Quantas notas deseja inserir? '))
@@ -17,37 +17,26 @@ def fill_marks(self):
     for i in range(1, qtd_marks + 1):
         while True:
             try:
-                mark = float(input(f'Digite a nota {i} de {self.name}: '))
-                if 0 <= mark <= 10:
-                    self.marks.append(mark)
+                grade = float(input(f'Digite a nota {i} de {student.name}: '))
+                if 0 <= grade <= 10:
+                    student.marks.append(grade)
                     break
                 else:
                     print("Por favor, insira um número entre 0 e 10.")
             except ValueError:
                 print("Por favor, insira um número válido.")
 
-        # Agora pedimos o peso de cada nota
-        while True:
-            try:
-                weight = float(input(f'Digite o peso para a nota {i} (exemplo: 1.0, 2.5): '))
-                if weight > 0:
-                    self.weighted_marks.append(weight)
+        # Se média ponderada for selecionada, pergunte o peso
+        if student.is_weighted:
+            while True:
+                try:
+                    weight = float(input(f'Digite o peso para a nota {i}: '))
+                    student.weighted_marks.append(weight)
                     break
-                else:
-                    print("O peso deve ser um número positivo.")
-            except ValueError:
-                print("Por favor, insira um peso válido.")
+                except ValueError:
+                    print("Por favor, insira um número válido para o peso.")
 
-    # Escolha de média
-    while True:
-        choice = input("Deseja calcular a média (A)ritmética ou (P)onderada? ").strip().upper()
-        if choice == 'A':
-            self.final_mark = self.calculate_media_arithmetic()
-            break
-        elif choice == 'P':
-            self.final_mark = self.calculate_weighted_media()
-            break
-        else:
-            print("Opção inválida! Digite 'A' para Aritmética ou 'P' para Ponderada.")
-
-    self.condition = self.check_condition()
+    # Decide qual média calcular com base no tipo escolhido
+    student.final_mark = (student.calculate_weighted_media() if student.is_weighted 
+                          else student.calculate_media_arithmetic())
+    student.condition = student.check_condition()
