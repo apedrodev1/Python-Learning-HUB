@@ -16,6 +16,7 @@
 
 - A estrutura de pastas foi organizada da seguinte maneira:
 
+![image](https://github.com/user-attachments/assets/89966115-0595-454e-b4dd-f810edfeec1c)
 
 
 </br>
