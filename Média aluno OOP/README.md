@@ -9,19 +9,17 @@ This project calculates student averages using Object-Oriented Programming (OOP)
 1. Clone the Repository
 2. Clone this repository to your local environment:
    
-bash
-Copy code
-git clone <https://github.com/apedrodev1/Python-Learning-HUB/tree/main/M%C3%A9dia%20aluno%20OOP>
+Copy code:
+<code>git clone <https://github.com/apedrodev1/Python-Learning-HUB/tree/main/M%C3%A9dia%20aluno%20OOP></code>
+
 
 3. Open the Project in Your IDE
-4. Open the index.py file in your preferred IDE.
+4. Open the `index.py` file in your preferred IDE.
 
 ## Run the Program
 Open a terminal, navigate to the project directory, and start the program:
-
-bash
-Copy code
-python index.py
+`bash`
+<code>python index.py</code>
 Interact with the Program
 
 
@@ -42,8 +40,6 @@ Report Card Display: Shows each student’s name, grades, required average, calc
 
 
 
-
-
 ## Folder structure:
 
 - The folder structure was organized as follows:
@@ -53,8 +49,6 @@ Report Card Display: Shows each student’s name, grades, required average, calc
 
 </br>
 <div style="text-align:center;">
-
-![image](link da img)
 
 </br>
 
