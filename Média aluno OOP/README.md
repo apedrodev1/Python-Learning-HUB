@@ -44,11 +44,10 @@ Report Card Display: Shows each student’s name, grades, required average, calc
 
 - The folder structure was organized as follows:
 
-![image](https://github.com/user-attachments/assets/89966115-0595-454e-b4dd-f810edfeec1c)
-
 
 </br>
 <div style="text-align:center;">
+![image](https://github.com/user-attachments/assets/89966115-0595-454e-b4dd-f810edfeec1c)
 
 </br>
 
