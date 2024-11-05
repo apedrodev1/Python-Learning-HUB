@@ -37,7 +37,7 @@ while True:
 
         # Export data after showing the report
         export_to_json(student)
-        export_to_xml(student)
+        export_to_xml(student) #laco while sobrescreve o arquivo com o ultimo aluno inserido, criar lista next feature 
 
         student.marks.clear()  # Clears marks after display
 
