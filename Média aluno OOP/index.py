@@ -1,5 +1,6 @@
 from classes.classStudent import Student
 from functions.function import clear_screen, fill_marks
+from functions.export_functions import export_to_json, export_to_xml
 
 while True:
     student_name = input('Enter the student\'s name: ')
@@ -30,9 +31,13 @@ while True:
 
         print('-----------------------------')
         print(f'{"Required Average":<15} | {student.final_mark:>10.2f}')
-        print(f'{"Student\'s Average":<15} | {student.final_mark:>10.2f}')
+        print(f'{"Student s Average":<15} | {student.final_mark:>10.2f}') # Resover o Student's depois dificuldade com ' e "
         print('-----------------------------')
         print(f'{"Status":<15} | {student.condition:>10}')
+
+        # Export data after showing the report
+        export_to_json(student)
+        export_to_xml(student)
 
         student.marks.clear()  # Clears marks after display
 
@@ -45,3 +50,5 @@ while True:
     if continue_input == 'n':
         print('Closing the program... See you next time!')
         break  
+
+
