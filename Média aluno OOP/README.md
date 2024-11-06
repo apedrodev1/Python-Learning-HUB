@@ -45,7 +45,7 @@ Copy code:
 
 - The folder structure was organized as follows:
 
-![image](https://github.com/user-attachments/assets/89966115-0595-454e-b4dd-f810edfeec1c)
+![image](https://github.com/user-attachments/assets/c3c7e1c0-7b69-46e0-9456-300e1153f962)
 
 </br>
 <div style="text-align:center;">
