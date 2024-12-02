@@ -3,19 +3,32 @@ import os
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+def validation_grade(num_grades):
+    while True:
+        try:
+            if num_grades > 0:
+                return num_grades
+            else: 
+                print('Please enter a positive integer.')
+                return None
+        except ValueError: 
+            print('Please enter a valid number.')
+            return None
+
 def fill_marks(student):
     while True:
         try:
             num_grades = int(input('How many grades would you like to enter? '))
-            if num_grades > 0:
-                break
-            else: 
-                print('Please enter a positive integer.')
+            valid_num_grades = validation_grade(num_grades)
 
-        except ValueError: 
-            print('Please enter a valid number.')
-    
-    for i in range(1, num_grades + 1):
+            if valid_num_grades:
+                break
+            else:
+                continue
+        except ValueError:
+              print('Please enter a valid number.')
+
+    for i in range(1, valid_num_grades + 1):
         while True: 
             try:
                 grade = float(input(f'Enter grade {i} for {student.name}: '))
@@ -43,3 +56,13 @@ def fill_marks(student):
     student.final_mark = (student.calculate_weighted_mean() if student.is_weighted 
                           else student.calculate_arithmetic_mean())
     student.condition = student.check_condition()
+
+
+
+
+
+
+
+
+
+
