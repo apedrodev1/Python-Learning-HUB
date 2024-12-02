@@ -1,4 +1,4 @@
-from data_validation import validation_grade, validation_grade_value, validation_weigth
+from data_validation import validation_grade, validation_input, validation_weigth
 
 def fill_marks(student):
     while True:
@@ -11,17 +11,16 @@ def fill_marks(student):
         except ValueError:
             print('Please enter a valid number.')
 
-    for i in range(1, valid_num_grades + 1):
-        while True:
-            try:
-                grade = float(input(f'Enter grade {i} for {student.name}: '))
-                
-                
-                if validation_grade_value(grade):
-                    student.marks.append(grade)
-                    break 
-            except ValueError:
-                print("Please enter a valid number for the grade.")
+        for i in range(1, num_grades + 1):
+            while True:
+                try:
+                    grade = float(input(f'Enter grade {i} for {student.name}: '))
+                    
+                    if validation_input(grade, 0, 10, "grade"):
+                        student.marks.append(grade)
+                        break  
+                except ValueError:
+                    print("Please enter a valid number for the grade.")
 
         # nao funciona!!! VER! 
         if student.is_weighted:
