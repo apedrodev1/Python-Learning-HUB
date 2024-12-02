@@ -1,5 +1,6 @@
 from classes.classStudent import Student
-from functions.function import clear_screen, fill_marks
+from functions.main_function import fill_marks
+from functions.clear_screen import clear_screen
 from functions.export_functions import export_to_json, export_to_xml
 
 while True:
