@@ -1,22 +1,20 @@
 from classes.classStudent import Student
 from functions.main_function import fill_marks
+from functions.data_validation import  validation_input #Nao acha o modulo - VER!!!!
 from functions.clear_screen import clear_screen
 from functions.export_functions import export_to_json, export_to_xml
 
 while True:
     student_name = input('Enter the student\'s name: ')
     
-    # Validate student name
     if student_name.isalpha():  
         while True:
             try:
                 passing_grade = float(input("Enter the required average for passing (between 0 and 10): "))
-                if 0 <= passing_grade <= 10:  
+                if validation_input(passing_grade, 0, 10, "required average"):
                     break  
-                else:
-                    print("The average must be between 0 and 10. Please try again.")
             except ValueError:
-                print("Please enter a valid number for the average.")
+             print("Please enter a valid number for the average.")
         
         student = Student(student_name, passing_grade)  
         fill_marks(student) 
