@@ -1,6 +1,6 @@
 from classes.classStudent import Student
 from functions.main_function import fill_marks
-from functions.data_validation import  validation_input #Nao acha o modulo - VER!!!!
+from functions.data_validation import validation_input #Nao acha o modulo - VER!!!!
 from functions.clear_screen import clear_screen
 from functions.export_functions import export_to_json, export_to_xml
 
