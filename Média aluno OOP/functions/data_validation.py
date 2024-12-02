@@ -12,11 +12,11 @@ def validation_grade(num_grades):
 
     
         
-def validation_grade_value(grade):
-    if 0 <= grade <= 10:  
+def validation_input(value, min_value, max_value, value_type="input"):
+    if min_value <= value <= max_value:
         return True
     else:
-        print("Please enter a grade between 0 and 10.")
+        print(f"The {value_type} must be between {min_value} and {max_value}. Please try again.")
         return False
     
 
