@@ -1,8 +1,11 @@
 # Calculating Student Averages
 
+<br>
 
 ## Description
 This project calculates student averages using Object-Oriented Programming (OOP) principles in Python. The system allows for both arithmetic and weighted averages based on user input and provides a simple report card with each student's status (pass or fail) based on a customizable passing average.
+
+<br>
 
 ## How to Use
 
@@ -10,7 +13,7 @@ This project calculates student averages using Object-Oriented Programming (OOP)
 2. Clone this repository to your local environment:
    
 Copy code:
-<code>git clone <https://github.com/apedrodev1/Python-Learning-HUB/tree/main/M%C3%A9dia%20aluno%20OOP></code>
+- <code>git clone <https://github.com/apedrodev1/Python-Learning-HUB/tree/main/M%C3%A9dia%20aluno%20OOP></code>
 
 3. Open the Project in Your IDE
  (make sure you have the python extention installed)  
@@ -31,6 +34,8 @@ Copy code:
 - Repeat or Exit
 - The program will prompt you to add another student or exit.
 
+<br>
+
 ## Features:
 
 - Object-Oriented Design: Utilizes a Student class with methods for calculating arithmetic and weighted averages.
@@ -40,6 +45,7 @@ Copy code:
 - Report Card Display: Shows each student’s name, grades, required average, calculated average, and pass/fail status.
 - Data Export in JSON and XML: Provides the option to export student data in JSON and XML formats, making it easy to save, share, and integrate with other systems.
 
+<br>
 
 ## Folder structure:
 
