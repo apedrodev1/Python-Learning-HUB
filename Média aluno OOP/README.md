@@ -15,6 +15,8 @@ This project calculates student averages using Object-Oriented Programming (OOP)
 - Copy code:
   - <code>git clone <https://github.com/apedrodev1/Python-Learning-HUB/tree/main/M%C3%A9dia%20aluno%20OOP></code>
 
+<br>
+
 3. Open the Project in Your IDE
  (make sure you have the python extention installed)  
 4. Open the `index.py` file in your preferred IDE.
