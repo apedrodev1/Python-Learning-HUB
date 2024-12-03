@@ -19,6 +19,7 @@ Copy code:
  (make sure you have the python extention installed)  
 4. Open the `index.py` file in your preferred IDE.
 5. Open a terminal, navigate to the project directory, and start the program:
+
 `bash`
 <code>python index.py</code>
 
