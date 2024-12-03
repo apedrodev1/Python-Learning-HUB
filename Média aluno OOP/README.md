@@ -24,6 +24,8 @@ Copy code:
 
 6. Interact with the Program
 
+<br>
+
 ## Run the Program:
 
 - Enter each student’s name.
