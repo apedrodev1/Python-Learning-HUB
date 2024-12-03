@@ -12,8 +12,8 @@ This project calculates student averages using Object-Oriented Programming (OOP)
 1. Clone the Repository
 2. Clone this repository to your local environment:
    
-Copy code:
-- <code>git clone <https://github.com/apedrodev1/Python-Learning-HUB/tree/main/M%C3%A9dia%20aluno%20OOP></code>
+- Copy code:
+  - <code>git clone <https://github.com/apedrodev1/Python-Learning-HUB/tree/main/M%C3%A9dia%20aluno%20OOP></code>
 
 3. Open the Project in Your IDE
  (make sure you have the python extention installed)  
