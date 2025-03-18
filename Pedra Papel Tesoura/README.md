@@ -74,7 +74,7 @@ Dicionários para Clareza:
 
 </br>
 
-## Layout do projeto:
+## Execução do projeto:
 
 </br>
 
