@@ -32,7 +32,7 @@ This project calculates student averages using Object-Oriented Programming (OOP)
 
 5. Open a terminal, navigate to the project directory, and start the program:
 
-- <code>python index.py</code>
+ <code>python index.py</code>
 
 <br>
 
