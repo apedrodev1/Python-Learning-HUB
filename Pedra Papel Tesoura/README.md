@@ -42,6 +42,7 @@ Melhoria na Entrada do Usuário:
 - Dicionário de Pontuação: O código melhorado usa um dicionário para rastrear o número de vitórias, derrotas e empates. Isso facilita a atualização e impressão do placar.
 
 </br>
+
 ## 3 - Iteração Controlada:
 
 - Número de Rounds: O código melhorado permite ao usuário especificar o número de rounds antes de iniciar o jogo (timesToPlay). O jogo roda um número fixo de vezes, o que é mais amigável para o usuário.
@@ -65,6 +66,7 @@ Dicionários para Clareza:
 
 
 </br>
+
 ## 6 - Loop Principal:
 
 - Estrutura do Loop: No código melhorado, o loop principal está dentro da função play_game, facilitando a leitura e a estrutura do programa.
