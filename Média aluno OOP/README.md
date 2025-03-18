@@ -10,6 +10,9 @@ This project calculates student averages using Object-Oriented Programming (OOP)
 ## How to Use
 
 1. Clone the Repository
+
+<br>
+
 2. Clone this repository to your local environment:
    
 - Copy code:
@@ -19,10 +22,18 @@ This project calculates student averages using Object-Oriented Programming (OOP)
 
 3. Open the Project in Your IDE
  (make sure you have the python extention installed)  
+
+<br>
+
 4. Open the `index.py` file in your preferred IDE.
+
+<br>
+
 5. Open a terminal, navigate to the project directory, and start the program:
 
 - <code>python index.py</code>
+
+<br>
 
 6. Interact with the Program
 
