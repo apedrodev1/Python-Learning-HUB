@@ -35,20 +35,19 @@ Este projeto é um jogo de Pedra, Papel e Tesoura em Python. Ele permite que os 
 Responsabilidade Única: Cada função tem uma responsabilidade clara, seguindo o princípio da responsabilidade única.
 Melhoria na Entrada do Usuário:
 
-
+</br>
 
 ## 2 - Controle de Pontuação:
 
 - Dicionário de Pontuação: O código melhorado usa um dicionário para rastrear o número de vitórias, derrotas e empates. Isso facilita a atualização e impressão do placar.
 
-
-
+</br>
 ## 3 - Iteração Controlada:
 
 - Número de Rounds: O código melhorado permite ao usuário especificar o número de rounds antes de iniciar o jogo (timesToPlay). O jogo roda um número fixo de vezes, o que é mais amigável para o usuário.
 Mensagens Detalhadas:
 
-
+</br>
 
 ## 4 - Abreviações Simplificadas:
 
@@ -58,14 +57,14 @@ Dicionários para Clareza:
 
 - Mapeamento com Dicionário: CHOICES_DICT mapeia as abreviações para seus nomes completos. Isso melhora a legibilidade nas mensagens ao usuário (Você escolheu: Pedra).
 
-
+</br>
 
 ## 5 -  Feedback Claro:
 
  - As mensagens no código melhorado são mais detalhadas e incluem o nome completo da escolha do usuário e do computador, o que melhora a compreensão do resultado.
 
 
-
+</br>
 ## 6 - Loop Principal:
 
 - Estrutura do Loop: No código melhorado, o loop principal está dentro da função play_game, facilitando a leitura e a estrutura do programa.
