@@ -75,12 +75,14 @@ Dicionários para Clareza:
 </br>
 
 ## Layout do projeto:
+
 </br>
+
 <p align="center"> 
 <img src="https://github.com/apedrodev1/Python-Learning-HUB/assets/104085801/54d75725-723e-4867-9901-d3b8d02d67cf"
 <\p>
 
-
+</br>
 
   ---
   
