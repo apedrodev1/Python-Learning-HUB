@@ -1,4 +1,4 @@
-from data_validation import validation_grade, validation_input, validation_weigth
+from functions.data_validation import validation_grade, validation_input, validation_weigth
 
 def fill_marks(student):
     while True:
@@ -23,6 +23,18 @@ def fill_marks(student):
                     print("Please enter a valid number for the grade.")
 
         # nao funciona!!! VER! 
+        if student.is_weighted:
+         for i in range(num_grades):
+            while True:
+                try:
+                    weight = float(input(f'Enter the weight for grade {i+1}: '))
+                    if validation_weigth(weight):
+                        student.weighted_marks.append(weight)
+                    break
+
+                except ValueError:
+                    print("Please enter a valid number for the weight.")
+
         if student.is_weighted:
             while True:
                 try:
