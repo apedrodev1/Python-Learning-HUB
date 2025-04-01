@@ -1,8 +1,11 @@
 from classes.classStudent import Student
 from functions.main_function import fill_marks
-from functions.data_validation import validation_input #Nao acha o modulo - VER!!!!
+from functions.data_validation import validation_grade, validation_input, validation_weigth
 from functions.clear_screen import clear_screen
 from functions.export_functions import export_to_json, export_to_xml
+
+
+students_list = []
 
 while True:
     student_name = input('Enter the student\'s name: ')
@@ -29,14 +32,17 @@ while True:
             print(f'Grade {i:<7} | {grade:>10.2f}')
 
         print('-----------------------------')
-        print(f'{"Required Average":<15} | {student.final_mark:>10.2f}')
-        print(f'{"Student s Average":<15} | {student.final_mark:>10.2f}') # Resover o Student's depois dificuldade com ' e "
+        print(f'{"Required Average":<15} | {student.passing_grade:>10.2f}')
+        label = "Student's Average"
+        print(f"{label:<15} | {student.final_mark:>10.2f}")
+
+ 
         print('-----------------------------')
         print(f'{"Status":<15} | {student.condition:>10}')
 
         # Export data after showing the report
-        export_to_json(student)
-        export_to_xml(student) #laco while sobrescreve o arquivo com o ultimo aluno inserido, criar lista next feature 
+        export_to_json(students_list)
+        export_to_xml(students_list)
 
         student.marks.clear()  # Clears marks after display
 
@@ -50,4 +56,6 @@ while True:
         print('Closing the program... See you next time!')
         break  
 
+
+students_list.append(student)
 
