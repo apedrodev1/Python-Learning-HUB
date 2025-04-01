@@ -1,15 +1,17 @@
 import json
 import xml.etree.ElementTree as ET
 
-def export_to_json(student, filename='student_data.json'):
-    data = {
-        'name': student.name,
-        'passing_grade': student.passing_grade,
-        'marks': student.marks,
-        'final_mark': student.final_mark,
-        'condition': student.condition,
-        'weighted_marks': student.weighted_marks if student.is_weighted else None,
-    }
+def export_to_json(students, filename='student_data.json'):
+    data = []
+    for student in students:
+        data.append({
+            'name': student.name,
+            'passing_grade': student.passing_grade,
+            'marks': student.marks,
+            'final_mark': student.final_mark,
+            'condition': student.condition,
+            'weighted_marks': student.weighted_marks if student.is_weighted else None,
+        })
     
     with open(filename, 'w') as f:
         json.dump(data, f, indent=4)
@@ -19,7 +21,7 @@ def export_to_json(student, filename='student_data.json'):
 def export_to_xml(student, filename='student_data.xml'):
     student_element = ET.Element('Student')
     ET.SubElement(student_element, 'Name').text = student.name
-    ET.SubElement(student_element, 'PassingGrade').text = str(student.passing_grade)
+    ET.SubElement(student_element, 'PassingGrade').text = str(student.passing_grade) 
     
     marks_element = ET.SubElement(student_element, 'Marks')
     for mark in student.marks:
