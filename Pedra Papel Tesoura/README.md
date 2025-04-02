@@ -64,22 +64,25 @@ Dicionários para Clareza:
 
  - As mensagens no código melhorado são mais detalhadas e incluem o nome completo da escolha do usuário e do computador, o que melhora a compreensão do resultado.
 
+
 </br>
 
 ## 6 - Loop Principal:
 
 - Estrutura do Loop: No código melhorado, o loop principal está dentro da função play_game, facilitando a leitura e a estrutura do programa.
-</br>
+
 
 </br>
 
-## Layout do projeto:
+## Execução do projeto:
+
 </br>
+
 <p align="center"> 
 <img src="https://github.com/apedrodev1/Python-Learning-HUB/assets/104085801/54d75725-723e-4867-9901-d3b8d02d67cf"
 <\p>
 
-
+</br>
 
   ---
   
