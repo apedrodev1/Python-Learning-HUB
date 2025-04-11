@@ -1,14 +1,15 @@
 #modulos
+from functions.parameters import get_main_parameters 
 
+print("🎓 Bem-vindo ao Sistema de Cálculo de Médias 🎓\n")
 
-print('Bem vindo ao xxxx (nome do programa)!\n')
-students_quantity = input('Voce deseja calcular a medias de quantos alunos hoje? ') 
-way_to_calculate = input('Deseja usar a media aritimetica ou ponderada? (Use 0 para aritmetica e 1 para ponderada)')
-passing_grade = input('Qual sera a nota da media?')
+main_parameters = get_main_parameters()
 
-while students_quantity != 0:
-    student_name = input('Qual o nome do Aluno?')
-    
-    student = Student(student_name, passing_grade, way_to_calculate)  
-    fill_marks(student) 
-        
+#apos isso vamos chamar mais uma funcao que vai rodar o laco de acordo com o n de vezes de students_quantity, e integrar os dados pedidos nela com a classe Student, na classe Student ira ocorrer o calculo
+
+input(print('Deseja exportar os dados em xml ou json'))
+#chama a funcao de exportar, podemos tambem exibir na tela / mas por enquanto trabalharemos apenas com a exportacao
+
+(input(print('Deseja rodar de novo')))
+
+#if no mensagem de fim do programa  
