@@ -1,15 +1,34 @@
 #modulos
-from functions.parameters import get_main_parameters 
+from src.functions.parameters import get_main_parameters
+from src.functions.main_function import process_students
+#from src.functions.exporter import export_data
+
 
 print("🎓 Bem-vindo ao Sistema de Cálculo de Médias 🎓\n")
 
-main_parameters = get_main_parameters()
+def main():
+    students_quantity, way_to_calculate, passing_grade, weights = get_main_parameters()
+    students_list = process_students(students_quantity, way_to_calculate, passing_grade, weights)
+    
+#funcao export_data export_data(students_list)
+#funcao enviar para o email 
+#funcao imprimir na tela
 
-#apos isso vamos chamar mais uma funcao que vai rodar o laco de acordo com o n de vezes de students_quantity, e integrar os dados pedidos nela com a classe Student, na classe Student ira ocorrer o calculo
 
-input(print('Deseja exportar os dados em xml ou json'))
-#chama a funcao de exportar, podemos tambem exibir na tela / mas por enquanto trabalharemos apenas com a exportacao
+
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+
+
 
 (input(print('Deseja rodar de novo')))
 
 #if no mensagem de fim do programa  
+
+
