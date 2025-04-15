@@ -7,7 +7,7 @@ from src.functions.main_function import process_students
 print("🎓 Bem-vindo ao Sistema de Cálculo de Médias 🎓\n")
 
 def main():
-    students_quantity, way_to_calculate, passing_grade, weights = get_main_parameters()
+    students_quantity, way_to_calculate, passing_grade, weights = get_main_parameters() ##crashando ao passar argumentos
     students_list = process_students(students_quantity, way_to_calculate, passing_grade, weights)
     
 #funcao export_data export_data(students_list)
