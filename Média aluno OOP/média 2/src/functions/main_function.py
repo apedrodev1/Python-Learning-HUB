@@ -1,9 +1,7 @@
 from src.classes.Student import Student
 from ..functions.validations import validate_grade, validate_names
 
-
-def process_students(main_parameters):
-    students_quantity, way_to_calculate, passing_grade, weights = main_parameters
+def process_students(students_quantity, way_to_calculate, passing_grade, weights): 
     is_weighted = True if way_to_calculate == "1" else False
 
     student_list = []
