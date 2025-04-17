@@ -44,5 +44,9 @@ def validate_weights(weights_input):
 
 
 def validate_names(name):
-     return name.replace(" ", "").isalpha()
+     cleaned = name.strip().capitalize()
+     if cleaned.replace(" ", "").isalpha(): #funcao editada
+         return cleaned
+     else:
+         return None
 
