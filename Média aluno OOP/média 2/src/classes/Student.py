@@ -1,4 +1,4 @@
-from src.functions.validations import validate_grade  # Remover validate_marks, já que não está mais em uso
+from src.functions.validations import validate_grade  
 
 class Student:
     def __init__(self, name, passing_grade, weights_marks=None, is_weighted=False):
