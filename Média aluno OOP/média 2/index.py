@@ -1,5 +1,9 @@
+#modulos:
+
 from src.functions.parameters import get_main_parameters
 from src.functions.main_function import process_students
+from src.functions.retry import ask_to_retry
+
 
 print("🎓 Bem-vindo ao Sistema de Cálculo de Médias 🎓\n")
 
@@ -15,7 +19,7 @@ def main():
 
             print(students_list)
 
-            retry = input("\n🔁 Deseja rodar o programa novamente? (s/n): ").lower()
+            retry = input("\n🔁 Deseja rodar o programa novamente? (s/n): ").lower() #usar a funcao
             if retry != 's':
                 print("\n👋 Programa finalizado. Até a próxima!")
                 break
