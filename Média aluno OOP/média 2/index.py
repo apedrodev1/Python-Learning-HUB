@@ -2,7 +2,7 @@
 
 from src.functions.parameters import get_main_parameters
 from src.functions.main_function import process_students
-from src.functions.retry import ask_to_retry
+from src.functions.loop_control import ask_to_retry
 
 
 print("🎓 Bem-vindo ao Sistema de Cálculo de Médias 🎓\n")
