@@ -13,15 +13,16 @@ class Student:
         # Verifica se todas as notas são válidas com validate_grade
         validated_marks = []
         for mark in marks:
-            valid_mark = validate_grade(mark)
-            if valid_mark is not None:
-                validated_marks.append(valid_mark)
+            mark_value, error = validate_grade(mark)
+            if error is None:
+                validated_marks.append(mark_value)
             else:
                 print(f"❌ Invalid mark: {mark}. Marks must be between 0 and 10.")
         if validated_marks:
             self.marks = validated_marks
         else:
             print(f"❌ No valid marks for student {self.name}.")
+
 
     def calculate_average(self):
         if self.is_weighted and self.weights_marks:
