@@ -42,9 +42,9 @@ This project calculates student averages using Object-Oriented Programming (OOP)
 
 ## Run the Program:
 
-- Enter each student’s name.
-- Set the required passing average.
+- Set how many students, You would like to calculate averages.
 - Choose the type of average calculation: arithmetic or weighted.
+- Set the required passing average.
 - Enter the desired grades (and weights, if weighted average is chosen).
 - View the generated report card, showing grades, required average, student’s average, and pass/fail status.
 - Edit or correct grade or student's name.
