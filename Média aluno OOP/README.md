@@ -1,3 +1,4 @@
+
 # Calculating Student Averages
 
 <br>
@@ -46,10 +47,69 @@ This project calculates student averages using Object-Oriented Programming (OOP)
 - Choose the type of average calculation: arithmetic or weighted.
 - Enter the desired grades (and weights, if weighted average is chosen).
 - View the generated report card, showing grades, required average, student’s average, and pass/fail status.
+- Edit or correct grade or student's name.
 - Repeat or Exit
 - The program will prompt you to add another student or exit.
 
 <br>
+
+
+# ✅ Logical Order Summary
+
+## 🧠 Program Flow
+
+<code>get_main_parameters()
+process_students(students_quantity, way_to_calculate, passing_grade, weights)
+show_student_list()
+
+if user_wants_to_correct:
+    correct_students()
+    show_student_list()  # após correção
+
+if user_wants_to_export:
+    export_students()
+
+ask_to_retry()</code>
+
+<br>
+
+## 👤 User Flow
+
+1. Input of initial data:
+
+    - Type of average (simple or weighted)
+
+ - Minimum passing grade
+
+- Weights of the grades (if weighted)
+
+- Number of students
+
+2. Filling in information for each student:
+
+- Name
+
+- Grades
+
+3. Displaying the list with:
+
+- Student's name
+
+- Final average
+
+- Status (Passed/Failed)
+
+4. Data correction (if the user desires):
+
+- Name and/or grades
+
+- Re-display the list with corrected data
+
+5. Exporting data (if the user desires):
+
+- Possible formats: JSON or XML
+
+6. Asking if the user wants to run the program again
 
 ## Features:
 
@@ -76,6 +136,3 @@ This project calculates student averages using Object-Oriented Programming (OOP)
 
 
 
-</br>
-
----
