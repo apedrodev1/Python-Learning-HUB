@@ -19,7 +19,7 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
 
         # Validação do nome do estudante
         while True:
-            name_input = input("Enter student name: ")
+            name_input = input("Enter student's name: ")
             name, error = validate_names(name_input)
             if error:
                 print(f'❌ {error}')
@@ -55,7 +55,6 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
                     break
 
         
-        print('📊 Notas armazenadas:', marks)
         # Cria o objeto Student com os dados fornecidos
         student = Student(name, passing_grade, weights if is_weighted else [], is_weighted)
         student.add_marks(marks)         # Adiciona as notas ao estudante
