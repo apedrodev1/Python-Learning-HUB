@@ -13,6 +13,9 @@ def main():
             students_quantity, way_to_calculate, passing_grade, weights = get_main_parameters() 
             students_list = process_students(students_quantity, way_to_calculate, passing_grade, weights)
             #display_students(students_list)
+            
+            if not ask_to_retry():
+                 break
         
         
         # Futuras funcionalidades
@@ -23,12 +26,6 @@ def main():
         
         
 
-            
-
-            retry = input("\n🔁 Deseja rodar o programa novamente? (s/n): ").lower() #usar a funcao
-            if retry != 's':
-                print("\n👋 Programa finalizado. Até a próxima!")
-                break
 
 if __name__ == "__main__":
     main()
