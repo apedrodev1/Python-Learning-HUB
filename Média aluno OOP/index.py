@@ -1,31 +1,40 @@
-#modulos:
-
+# Modules imported
 from src.functions.parameters import get_main_parameters
 from src.functions.main_function import process_students
 from src.functions.show_students import display_students
 from src.functions.loop_control import ask_to_retry
 
 
-print("🎓 Bem-vindo ao Sistema de Cálculo de Médias 🎓\n")
+print("🎓 Welcome to the Grade Calculation System 🎓\n")
 
 def main():
+    """
+    Main function that controls the flow of the program. It requests initial parameters, 
+    processes the students' data, and displays the results.
+    """
+    
     while True:
-            students_quantity, way_to_calculate, passing_grade, weights = get_main_parameters() 
-            students_list = process_students(students_quantity, way_to_calculate, passing_grade, weights)
-            display_students(students_list)
-            
-            if not ask_to_retry():
-                 break
-        
-        
-        # Futuras funcionalidades
+        # Get the main parameters from the user (number of students, type of average, etc.)
+        students_quantity, way_to_calculate, passing_grade, weights = get_main_parameters()
 
-        # editar notas e alunos via ID
-        # export_data(students_list)
-        # enviar para email
-        
-        
+        # Process the students' data
+        students_list = process_students(students_quantity, way_to_calculate, passing_grade, weights)
 
+        # Display the students' report
+        display_students(students_list)
+
+        # Ask the user if they want to run the program again
+        if not ask_to_retry():
+            break
+    
+    # Future features:
+    # - Edit grades and students by ID
+    # - Export data to formats like CSV, JSON, or XML
+    # - test_validations.py
+    # - Send the results via email
+    # - Add graphs or other types of reports
+    
 
 if __name__ == "__main__":
     main()
+
