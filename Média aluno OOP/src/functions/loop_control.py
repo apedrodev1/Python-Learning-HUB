@@ -1,9 +1,12 @@
 import os
 
-def clear_screen(): #limpa a tela
+def clear_screen():
+         '''' limpa a tela '''
          os.system('cls' if os.name == 'nt' else 'clear')
 
-def ask_to_retry(): #repete o programa
+
+def ask_to_retry(): #
+    '''' repete o programa '''
     retry = input("\n🔁 Deseja rodar o programa novamente? (s/n): ").lower()
     if retry == 's':
            clear_screen()
