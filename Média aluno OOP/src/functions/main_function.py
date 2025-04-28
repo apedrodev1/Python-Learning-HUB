@@ -28,6 +28,7 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
 
     # Loop to process each student
     for i in range(students_quantity):
+        student_id = i+1 
         print(f"\n📘 Student {i+1}")
 
         # Validation of the student's name
@@ -67,7 +68,7 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
                     break
 
         # Creates the Student object with the provided data
-        student = Student(name, passing_grade, weights if is_weighted else [], is_weighted)
+        student = Student(student_id, name, passing_grade, weights if is_weighted else [], is_weighted)
         student.add_marks(marks)         # Adds grades to the student
         student.check_condition()        # Checks if the student passed based on the average
 
@@ -76,4 +77,3 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
 
     # Returns the list with all processed students
     return student_list
-
