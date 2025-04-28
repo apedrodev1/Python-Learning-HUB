@@ -13,16 +13,19 @@ class Student:
         is_weighted (bool): Whether the average calculation should be weighted.
     '''
     
-    def __init__(self, name, passing_grade, weights_marks=None, is_weighted=False):
+    def __init__(self, student_id, name, passing_grade, weights_marks=None, is_weighted=False):
         '''
-        Initialize a Student instance with name, passing grade, and optional weights.
+        Initialize a Student instance with student's id, name, passing grade, and optional weights.
         
         Args:
+            student_id: The student's id.
             name (str): The student's name.
             passing_grade (float): Minimum grade to pass.
             weights_marks (list, optional): Weights for each mark if using weighted average.
             is_weighted (bool, optional): Indicates if calculation should be weighted.
         '''
+
+        self.student_id = student_id
         self.name = name
         self.passing_grade = passing_grade
         self.marks = []
