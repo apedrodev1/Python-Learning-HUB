@@ -18,6 +18,27 @@ def validate_quantity(input_quantity):
 
 
 
+def validate_id(input_id):
+    """
+     Validates if the id contains just numbers preceeded of 0.
+      
+    Args:
+        id (int): The student's id.
+
+    Returns:
+        tuple: () if valid, (None, error_message) if invalid.
+         """
+    
+    try:
+        value=int(input_id)
+        if value>= 0:
+            return value, None
+        return None, "ID must be 0 or greater."
+    except ValueError:
+        return None, "Please enter a valid integer ID."
+
+
+
 def validate_calculation_type(input_type):
     """
     Validates if the calculation type input is either 0 (arithmetic) or 1 (weighted).
