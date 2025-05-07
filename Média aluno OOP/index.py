@@ -2,6 +2,8 @@
 from src.functions.parameters import get_main_parameters
 from src.functions.main_function import process_students
 from src.functions.show_students import display_students
+from src.functions.edit_data.edit_student import edit_student_data 
+ 
 from src.functions.loop_control import ask_to_retry
 
 
@@ -22,6 +24,9 @@ def main():
 
         # Display the students' report
         display_students(students_list)
+        
+        # Ask to edit one or mutiples students
+        edit_student_data(students_list)
 
         # Ask the user if they want to run the program again
         if not ask_to_retry():
