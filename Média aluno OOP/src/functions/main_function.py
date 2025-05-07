@@ -50,7 +50,7 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
         else:
             # If arithmetic, ask the user how many grades will be entered
             while True:
-                marks_input = input("How many grades will be entered? ")
+                marks_input = input("How many grades will be entered? ") #corrigir!!! fazer a pergunta fora do laco das notas, dai fazer mais um aninhado para rodar a qtde de notas
                 num_marks, error = validate_quantity(marks_input)  # Uses validation to ensure a positive integer
                 if error:
                     print(f'❌ {error}')
