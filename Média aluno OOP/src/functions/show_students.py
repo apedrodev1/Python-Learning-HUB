@@ -14,7 +14,7 @@ def display_students(student_list):
 
     # Loop through each student and display their data
     for student in student_list:
-        print(f"\n🆔 ID: {student.student_id} | 📘 Name: {student.name}")
+        print(f"\n🆔 {str(student.student_id).zfill(2)} | 📘 Name: {student.name}")
         print(f"📋 Status: {student.condition}")
         print(f"📈 Grades: {student.marks}")
         
