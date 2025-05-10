@@ -79,6 +79,23 @@ def validate_weights(input_str):
 
 
 
+def validate_yes_no(input_value):
+    """
+    Validates a yes/no input. Accepts only 'y' or 'n'.
+
+    Args:
+        input_value (str): User input.
+
+    Returns:
+        tuple: (input_value, None) if valid, (None, error message) if invalid.
+    """
+    input_value = input_value.strip().lower()
+    if input_value in ["y", "n"]:
+        return input_value, None
+    return None, "Please enter only 'y' for yes or 'n' for no."
+
+
+
 def validate_grade(input_grade):
     """
     Validates if the grade is a number between 0 and 10.
