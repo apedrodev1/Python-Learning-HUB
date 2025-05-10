@@ -1,29 +1,33 @@
-
 # Calculating Student Averages 🌐
 
 <br>
 
 ## Description
+
 This project calculates student averages using Object-Oriented Programming (OOP) principles in Python. The system allows for both arithmetic and weighted averages based on user input and provides a simple report card with each student's status (pass or fail) based on a customizable passing average.
+
+The application has evolved into a modular and scalable solution, now supporting full CRUD operations on student records and strict adherence to [PEP 257](https://peps.python.org/pep-0257/) conventions for documentation.
 
 <br>
 
 ## How to Use
 
-1. Clone the Repository
+1. **Clone the Repository**
 
 <br>
 
 2. Clone this repository to your local environment:
-   
+
 - Copy code:
-  
-  - <code>git clone <https://github.com/apedrodev1/Python-Learning-HUB/tree/main/M%C3%A9dia%20aluno%20OOP></code>
+
+  ```bash
+  git clone https://github.com/apedrodev1/Python-Learning-HUB/tree/main/M%C3%A9dia%20aluno%20OOP
+  ```
 
 <br>
 
-3. Open the Project in Your IDE
- (make sure you have the python extention installed)  
+3. **Open the Project in Your IDE**  
+   *(Make sure you have the Python extension installed)*
 
 <br>
 
@@ -31,150 +35,135 @@ This project calculates student averages using Object-Oriented Programming (OOP)
 
 <br>
 
-5. Open a terminal, navigate to the project directory, and start the program:  <code>python index.py</code>
+5. Open a terminal, navigate to the project directory, and start the program:
 
-
-<br>
-
-6. Interact with the Program
-
-<br>
-
-## Run the Program:
-
-- Set how many students, You would like to calculate averages.
-- Choose the type of average calculation: arithmetic or weighted.
-- Set the required passing average.
-- Enter the desired grades (and weights, if weighted average is chosen).
-- View the generated report card, showing grades, required average, student’s average, and pass/fail status.
-- Edit or correct grade or student's name.
-- Repeat or Exit
-- The program will prompt you to add another student or exit.
+```bash
+python index.py
+```
 
 <br>
 
+6. **Interact with the Program**
 
-# ✅ Logical Order Summary
+<br>
 
-## 🧠 Program Flow
+---
 
-<code>get_main_parameters()
+## ✅ Logical Order Summary
+
+### 🧠 Program Flow
+
+```python
+get_main_parameters()
 process_students(students_quantity, way_to_calculate, passing_grade, weights)
 show_student_list()
 
 if user_wants_to_correct:
     correct_students()
-    show_student_list()  # após correção
+    show_student_list()  # after correction
 
 if user_wants_to_export:
     export_students()
 
-ask_to_retry()</code>
+ask_to_retry()
+```
 
 <br>
 
-## 👤 User Flow
+### 👤 User Flow
 
-1. Input of initial data:
+1. **Input of Initial Data**
+   - Type of average (simple or weighted)
+   - Minimum passing grade
+   - Weights of the grades (if weighted)
+   - Number of students
 
-- Type of average (simple or weighted)
+2. **Filling Student Data**
+   - Name
+   - Grades
 
- - Minimum passing grade
+3. **Displaying Report**
+   - Student's name
+   - Final average
+   - Status (Passed/Failed)
 
-- Weights of the grades (if weighted)
+4. **Optional Correction**
+   - Name and/or grades
+   - Re-displays corrected report
 
-- Number of students
+5. **Optional Export**
+   - JSON or XML format
 
-</br>
+6. **Program Repeat Option**
 
-2. Filling in information for each student:
+---
 
-- Name
+## 🚀 Features
 
-- Grades
+- **Object-Oriented Design**  
+  Centralized in a `Student` class with behaviors like average calculation and data editing.
 
-</br>
+- **CRUD Support**  
+  Students can now be created, read, updated, and deleted dynamically during execution.
 
-3. Displaying the list with:
+- **Modular & Scalable Structure**  
+  - Files separated by responsibility: `data/`, `export/`, `utils/`, and `validations/`
+  - Easily extensible for new features like filtering, sorting, or different user roles.
 
-- Student's name,
+- **PEP 257 Compliance**  
+  All functions and classes include clear, standardized docstrings.
 
-- Final average,
+- **User Choice for Average Type**  
+  Arithmetic or weighted, based on your criteria.
 
-- Status (Passed/Failed)
+- **Validated Input Flow**  
+  Input is thoroughly validated for type and bounds.
 
-</br>
+- **Clean Terminal UI**  
+  Screens are cleared between steps (where supported) to avoid clutter.
 
-4. Data correction (if the user desires):
+- **Detailed Report Card Output**  
+  Includes:
+  - Name  
+  - Grades and Weights (if any)  
+  - Required average  
+  - Calculated final average  
+  - Final pass/fail status
 
-- Name and/or grades,
+- **Data Export in JSON/XML**  
+  Supports integration or backup in standard formats.
 
-- Re-display the list with corrected data
+---
 
-</br>
+## 🗂️ Folder Structure
 
-5. Exporting data (if the user desires):
-
-- Possible formats: JSON or XML
-
-</br>
-
-6. Asking if the user wants to run the program again
-
-</br>
-
-## 🚀 Features:
-
-- Object-Oriented Design: Core functionality is built around a Student class that encapsulates student data and behaviors, such as calculating arithmetic and weighted averages.
-
-- User Choice for Average Type: Flexibly choose between an arithmetic or weighted average, depending on grading needs.
-
-- Dynamic Grade and Weight Entry: Enter any number of grades, and if using weighted averages, specify individual weights for each grade. The system ensures input validation and consistency.
-
-- Clear and Clean User Interface: Incorporates screen-clearing between inputs (where supported) for a more organized and user-friendly experience.
-
--Report Card Display: After processing, the system displays a detailed report for each student, including:
-
-    - Name
-
-    - Grades
-
-    - Weights (if applicable)
-
-    - Required passing grade
-
-    - Calculated average
-
-    - Final pass/fail status
-
-- Data Export in JSON and XML Formats: Student data can be easily exported in JSON and XML formats for backup, sharing, or integration with external systems.
-
-- Modular Organization (PEP 257 Compliance):
-
- - The codebase is cleanly separated into modules and packages (e.g., functions/, classes/), promoting readability, maintainability, and scalability.
-
- - All functions and classes follow PEP 257 guidelines, meaning they include clear, concise, and standardized docstrings.
-
-
-- Scalability with Design Patterns:
-
- - The current architecture allows easy integration of new features, such as editing students by ID, additional data exports, or new calculation types.
-
-- Future development can leverage patterns like Abstract Factory for creating different types of students (e.g., regular, scholarship students) without altering existing code.
-
-<br>
-
-## 🗂️ Folder structure:
-
-- The folder structure was organized as follows:
-
-![image](https://github.com/user-attachments/assets/6e380cbb-c447-4e9d-ac91-4d678e3c2879)
-
-</br>
-<div style="text-align:center;">
-
-
-
-
-
-
+```
+Média aluno OOP/
+│
+├── index.py
+├── README.md
+│
+├── src/
+│   ├── classes/
+│   │   └── Student.py
+│   │
+│   ├── functions/
+│   │   ├── data/
+│   │   │   ├── edit_student.py
+│   │   │   └── update_student_data.py
+│   │   │
+│   │   ├── export/
+│   │   │   ├── export_wrapper.py
+│   │   │   ├── json_exporter.py
+│   │   │   └── xml_exporter.py
+│   │   │
+│   │   ├── loop_control.py
+│   │   ├── main_function.py
+│   │   ├── parameters.py
+│   │   ├── show_students.py
+│   │   └── validations.py
+│   │
+│   └── utils/
+│       ├── colors.py
+│       └── formatters.py
+```
