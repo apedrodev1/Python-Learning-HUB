@@ -7,16 +7,19 @@ from ..functions.validations import (
 
 def get_main_parameters():
     """
-    Requests the three initial parameters:
-    - Number of students (defines how many times the loop will run)
+    Requests the initial parameters:
+    - Number of students
     - Type of calculation (arithmetic or weighted average)
-    - Minimum passing grade (cut-off grade)
+    - Minimum passing grade
+    - Number of grades per student (if arithmetic)
+    - Weights (if weighted)
 
     Returns:
-        tuple: (students_quantity, way_to_calculate, passing_grade, weights)
+        tuple: (students_quantity, way_to_calculate, passing_grade, weights, number_of_marks)
     """
 
     weights = []
+    number_of_marks = None
 
     # Validate the number of students
     while True:
@@ -45,6 +48,15 @@ def get_main_parameters():
                 print(f"❌ {error}")
             else:
                 break
+    else:
+        # If arithmetic, ask for the number of grades per student
+        while True:
+            marks_input = input("How many grades will each student have? ")
+            number_of_marks, error = validate_quantity(marks_input)
+            if error:
+                print(f"❌ {error}")
+            else:
+                break
 
     # Validate the passing grade
     while True:
@@ -55,4 +67,4 @@ def get_main_parameters():
         else:
             break
 
-    return students_quantity, way_to_calculate, passing_grade, weights
+    return students_quantity, way_to_calculate, passing_grade, weights, number_of_marks
