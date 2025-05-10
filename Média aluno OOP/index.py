@@ -37,7 +37,6 @@ def main():
         # Ask the user if they want to run the program again
         if not ask_to_retry():
             break
-
     # Future features:
     # - test_validations.py
     # - Send the results via email
