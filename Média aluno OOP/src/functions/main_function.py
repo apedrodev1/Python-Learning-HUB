@@ -1,4 +1,5 @@
 from src.classes.Student import Student
+from ..functions.show_students import display_students
 from ..functions.validations import (
     validate_grade,
     validate_names, 
@@ -61,5 +62,7 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
 
         student_list.append(student)
 
-    return student_list
+    display_students(student_list) 
+
+    return  student_list
 
