@@ -1,4 +1,5 @@
 import os
+from ..functions.validations import validate_yes_no
 
 def clear_screen():
     '''
@@ -14,17 +15,17 @@ def ask_to_retry():
     Returns:
         bool: True if the user wants to retry, False otherwise.
     '''
-    retry = input("\n🔁 Do you want to run the program again? (y/n): ").lower()
-    if retry == 'y':
-        clear_screen()
-        return True
-    elif retry == 'n':
-        print("\n👋 Program finished. See you next time!")
-        return False
-    else:
-        print("❌ Please type 'y' for yes or 'n' for no.")
-          
-    
+    while True:
+        retry_input = input("\n🔁 Do you want to run the program again? (y/n): ")
+        retry, error = validate_yes_no(retry_input)
+        if error:
+            print(f"❌ {error}")
+        elif retry == 'y':
+            clear_screen()
+            return True
+        elif retry == 'n':
+            print("\n👋 Program finished. See you next time!")
+            return False
 
   
     
