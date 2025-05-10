@@ -1,26 +1,27 @@
+from ..utils.formatters import format_student_row_for_show
+
 def display_students(student_list):
     """
-    Displays the processed data of students in a readable format.
+    Displays the processed data of students in a readable table format.
     
     Args:
         student_list (list): A list of student objects to be displayed.
     """
-    
     print("\n📊 Students Report:")
 
     if not student_list:
         print('❌ No students found.')
         return
 
-    # Loop through each student and display their data
+    # Agora seguro: só acessa o primeiro elemento após checar se lista não está vazia
+    type_label = "Weighted" if student_list[0].is_weighted else "Arithmetic"
+    print(f"\n🧮 Average Calculation Type: {type_label}")
+
+    print("─" * 100)
+    print(f"{'ID':<5} {'Name':<20} {'Grades':<20} {'Average':<10} {'Status':<15} {'Passing Grade'}")
+    print("─" * 100)
+
     for student in student_list:
-        print(f"\n🆔 {str(student.student_id).zfill(2)} | 📘 Name: {student.name}")
-        print(f"📋 Status: {student.condition}")
-        print(f"📈 Grades: {student.marks}")
-        
-        if student.is_weighted:
-            print(f"⚖️ Weights: {student.weights_marks}")
-        
-        print(f"🔢 Average: {student.calculate_average():.2f}")
-        print(f"💯 Passing Grade: {student.passing_grade}")
-        print("-" * 40)
+        print(format_student_row_for_show(student))
+
+    print("─" * 100)
