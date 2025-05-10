@@ -78,3 +78,4 @@ class Student:
         '''
         average = self.calculate_average()
         self.condition = "Approved" if average >= self.passing_grade else "Failed"
+        return self.condition
