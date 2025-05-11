@@ -37,6 +37,8 @@ python index.py
 
 ## ✅ Logical Order Summary
 
+<br>
+
 ### 🧠 Program Flow
 
 ```python
@@ -53,6 +55,7 @@ if user_wants_to_export:
 
 ask_to_retry()
 ```
+<br>
 
 ### 👤 User Flow
 
@@ -82,6 +85,8 @@ ask_to_retry()
 
 ---
 
+<br>
+
 ## 🧩 Use Case Diagram
 
 <p align="center">
@@ -94,6 +99,8 @@ ask_to_retry()
 </p>
 
 ---
+
+<br>
 
 ## 🚀 Features
 
@@ -127,6 +134,8 @@ ask_to_retry()
 
 ---
 
+<br>
+
 ## 🔮 Future Features
 
 - `test_validations.py`: Unit tests for all validation routines.
@@ -135,6 +144,8 @@ ask_to_retry()
 - User interface (GUI or web-based).
 
 ---
+
+<br>
 
 ## 🗂️ Folder Structure
 
@@ -168,6 +179,7 @@ Média aluno OOP/
 │       ├── colors.py
 │       └── formatters.py
 ```
+---
 
 
 
