@@ -14,26 +14,16 @@ The application has evolved into a modular and scalable solution, now supporting
 
 1. **Clone the Repository**
 
-<br>
-
 2. Clone this repository to your local environment:
 
-- Copy code:
-
-  ```bash
-  git clone https://github.com/apedrodev1/Python-Learning-HUB/tree/main/M%C3%A9dia%20aluno%20OOP
-  ```
-
-<br>
+```bash
+git clone https://github.com/apedrodev1/Python-Learning-HUB/tree/main/M%C3%A9dia%20aluno%20OOP
+```
 
 3. **Open the Project in Your IDE**  
    *(Make sure you have the Python extension installed)*
 
-<br>
-
 4. Open the `index.py` file in your preferred IDE.
-
-<br>
 
 5. Open a terminal, navigate to the project directory, and start the program:
 
@@ -41,11 +31,7 @@ The application has evolved into a modular and scalable solution, now supporting
 python index.py
 ```
 
-<br>
-
 6. **Interact with the Program**
-
-<br>
 
 ---
 
@@ -67,8 +53,6 @@ if user_wants_to_export:
 
 ask_to_retry()
 ```
-
-<br>
 
 ### 👤 User Flow
 
@@ -100,38 +84,42 @@ ask_to_retry()
 
 ## 🚀 Features
 
-- **Object-Oriented Design**  
-  Centralized in a `Student` class with behaviors like average calculation and data editing.
+- **Object-Oriented Design:** Core functionality is built around a `Student` class that encapsulates student data and behaviors, such as calculating arithmetic and weighted averages.
 
-- **CRUD Support**  
-  Students can now be created, read, updated, and deleted dynamically during execution.
+- **User Choice for Average Type:** Flexibly choose between an arithmetic or weighted average, depending on grading needs.
 
-- **Modular & Scalable Structure**  
-  - Files separated by responsibility: `data/`, `export/`, `utils/`, and `validations/`
-  - Easily extensible for new features like filtering, sorting, or different user roles.
+- **Dynamic Grade and Weight Entry:** Enter any number of grades, and if using weighted averages, specify individual weights for each grade. The system ensures input validation and consistency.
 
-- **PEP 257 Compliance**  
-  All functions and classes include clear, standardized docstrings.
+- **Clear and Clean User Interface:** Incorporates screen-clearing between inputs (where supported) for a more organized and user-friendly experience.
 
-- **User Choice for Average Type**  
-  Arithmetic or weighted, based on your criteria.
+- **Consistent Visual Layout:** The interface uses color formatting through `utils/colors.py`, improving readability and user engagement without making the layout visually overwhelming.
 
-- **Validated Input Flow**  
-  Input is thoroughly validated for type and bounds.
-
-- **Clean Terminal UI**  
-  Screens are cleared between steps (where supported) to avoid clutter.
-
-- **Detailed Report Card Output**  
-  Includes:
-  - Name  
-  - Grades and Weights (if any)  
-  - Required average  
-  - Calculated final average  
+- **Report Card Display:** After processing, the system displays a detailed report for each student, including:
+  - Name
+  - Grades
+  - Weights (if applicable)
+  - Required passing grade
+  - Calculated average
   - Final pass/fail status
 
-- **Data Export in JSON/XML**  
-  Supports integration or backup in standard formats.
+- **Data Export in JSON and XML Formats:** Student data can be easily exported in JSON and XML formats for backup, sharing, or integration with external systems.
+
+- **Modular Organization (PEP 257 Compliance):**  
+  The codebase is cleanly separated into modules and packages (e.g., `functions/`, `classes/`), promoting readability, maintainability, and scalability.  
+  All functions and classes follow PEP 257 guidelines, meaning they include clear, concise, and standardized docstrings.
+
+- **Scalability with Design Patterns:**  
+  The current architecture allows easy integration of new features, such as editing students by ID, additional data exports, or new calculation types.  
+  Future development can leverage patterns like Abstract Factory for creating different types of students (e.g., regular, scholarship students) without altering existing code.
+
+---
+
+## 🔮 Future Features
+
+- `test_validations.py`: Unit tests for all validation routines.
+- Send the results via email.
+- Add graphs or other types of reports.
+- User interface (GUI or web-based).
 
 ---
 
