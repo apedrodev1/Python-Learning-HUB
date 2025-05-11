@@ -155,3 +155,33 @@ Média aluno OOP/
 │       ├── colors.py
 │       └── formatters.py
 ```
+
+
+
+%% Use Case Diagram in Mermaid Syntax
+%% Requires Mermaid support (GitHub or Markdown preview with Mermaid)
+
+%% Actor and Use Cases
+%% Order: Add > Calculate > Edit > Update > Export
+
+%% Diagram title
+---
+title: Student Average Calculator - Use Case Diagram
+---
+
+%% Define diagram type
+%% (requires Mermaid plugin to visualize)
+
+graph TD
+    A[👤 User] --> B((Add Student))
+    A --> C((Calculate Average))
+    A --> D((Edit Student))
+    A --> E((Update Student))
+    A --> F((Export Data))
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#bbf,stroke:#333,stroke-width:1px
+    style C fill:#bbf,stroke:#333,stroke-width:1px
+    style D fill:#bbf,stroke:#333,stroke-width:1px
+    style E fill:#bbf,stroke:#333,stroke-width:1px
+    style F fill:#bbf,stroke:#333,stroke-width:1px
