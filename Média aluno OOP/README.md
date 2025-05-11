@@ -41,8 +41,8 @@ python index.py
 
 ```python
 get_main_parameters()
-process_students(students_quantity, way_to_calculate, passing_grade, weights)
-show_student_list()
+process_students(students_quantity, way_to_calculate, passing_grade, weights,
+show_student_list())
 
 if user_wants_to_correct:
     correct_students()
