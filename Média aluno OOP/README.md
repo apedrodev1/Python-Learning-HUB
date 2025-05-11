@@ -82,6 +82,19 @@ ask_to_retry()
 
 ---
 
+## 🧩 Use Case Diagram
+
+<p align="center">
+  <img 
+    src="https://github.com/user-attachments/assets/9c28c201-3ef7-4189-a0e7-51a4b01b4254" 
+    alt="ChatGPT Image May 11, 2025, 01_11_27 AM"
+    width="500"
+    style="border: 2px solid #ccc; border-radius: 10px;"
+  >
+</p>
+
+---
+
 ## 🚀 Features
 
 - **Object-Oriented Design:** Core functionality is built around a `Student` class that encapsulates student data and behaviors, such as calculating arithmetic and weighted averages.
@@ -158,30 +171,4 @@ Média aluno OOP/
 
 
 
-%% Use Case Diagram in Mermaid Syntax
-%% Requires Mermaid support (GitHub or Markdown preview with Mermaid)
 
-%% Actor and Use Cases
-%% Order: Add > Calculate > Edit > Update > Export
-
-%% Diagram title
----
-title: Student Average Calculator - Use Case Diagram
----
-
-%% Define diagram type
-%% (requires Mermaid plugin to visualize)
-
-graph TD
-    A[👤 User] --> B((Add Student))
-    A --> C((Calculate Average))
-    A --> D((Edit Student))
-    A --> E((Update Student))
-    A --> F((Export Data))
-
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style B fill:#bbf,stroke:#333,stroke-width:1px
-    style C fill:#bbf,stroke:#333,stroke-width:1px
-    style D fill:#bbf,stroke:#333,stroke-width:1px
-    style E fill:#bbf,stroke:#333,stroke-width:1px
-    style F fill:#bbf,stroke:#333,stroke-width:1px
