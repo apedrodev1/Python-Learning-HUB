@@ -1,10 +1,15 @@
+import json
 from tkinter import messagebox
+import main_page
 
-# Usuários fictícios para simulação
-USERS = {
-    "admin": "1234",
-    "usuario": "senha"
-}
+USERS_PATH = "data/users.json"
+
+def carregar_usuarios():
+    try:
+        with open(USERS_PATH, "r") as file:
+            return json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
 
 def login(entry_user, entry_pass, root):
     username = entry_user.get().strip()
@@ -14,21 +19,19 @@ def login(entry_user, entry_pass, root):
         messagebox.showwarning("Campos obrigatórios", "Preencha usuário e senha.")
         return
 
-    if username not in USERS:
+    users = carregar_usuarios()
+
+    if username not in users:
         messagebox.showerror("Usuário inválido", "Usuário não encontrado.")
         entry_user.delete(0, 'end')
         entry_pass.delete(0, 'end')
         return
 
-    if USERS[username] != password:
+    if users[username] != password:
         messagebox.showerror("Senha incorreta", "A senha está errada.")
         entry_pass.delete(0, 'end')
         return
 
-    # Login bem-sucedido
     messagebox.showinfo("Login bem-sucedido", f"Bem-vindo, {username}!")
     root.destroy()
-
-    # Armazena nome do usuário se quiser usá-lo em main_page
-    import main_page
     main_page.set_logged_user(username)
