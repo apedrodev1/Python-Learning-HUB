@@ -1,4 +1,3 @@
-
 # 📦 Sistema de Controle de Estoque - Elevah
 
 Projeto final da disciplina **Laboratório de Engenharia de Software** da **FATEC Mococa**, orientado pela professora **Jaciara Silva Carosia**.
