@@ -72,8 +72,8 @@ Os dados são armazenados localmente em arquivos `.json`:
 1. Certifique-se de ter o Python 3 instalado.
 2. Clone este repositório:
    ```bash
-   git clone https://github.com/seuusuario/seuprojeto.git
-   cd seuprojeto
+   git https://github.com/apedrodev1/Python-Learning-HUB/blob/main/Projeto%20-%20Fatec/
+   cd Projeto - Fatec
    ```
 3. Execute o sistema:
    ```bash
