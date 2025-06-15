@@ -1,0 +1,17 @@
+{
+    "101": {
+        "nome": "Quartzo Rosa",
+        "categoria": "Cristal",
+        "quantidade": 5
+    },
+    "102": {
+        "nome": "Olho de Tigre",
+        "categoria": "Cristal",
+        "quantidade": 3
+    },
+    "1": {
+        "nome": "Produto Desconhecido",
+        "categoria": "N/A",
+        "quantidade": 1
+    }
+}
