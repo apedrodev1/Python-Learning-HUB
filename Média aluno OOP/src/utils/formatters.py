@@ -5,8 +5,8 @@ def format_student_line_for_edit(student):
     Returns a concise formatted and aligned line for student editing interface.
     Shows ID, name, average, condition, and passing grade.
     """
-    avg = student.calculate_average()
-    condition = student.check_condition()
+    avg = student.average
+    condition = student.condition
 
     avg_color = GREEN if avg >= student.passing_grade else RED
     condition_color = GREEN if condition == "Approved" else RED
@@ -24,8 +24,8 @@ def format_student_row_for_show(student):
     Returns a detailed formatted and colored row for display in a report table.
     Ideal for show_students.
     """
-    avg = student.calculate_average()
-    condition = student.check_condition()
+    avg = student.average
+    condition = student.condition
 
     avg_color = GREEN if avg >= student.passing_grade else RED
     condition_color = GREEN if condition == "Approved" else RED
