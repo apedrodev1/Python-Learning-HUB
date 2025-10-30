@@ -57,12 +57,14 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
 
         # Create and process Student
         student = Student(student_id, name, passing_grade, weights if is_weighted else [], is_weighted)
-        student.set_marks(marks)
-        student.condition()
-
+        try:
+            student.marks = marks
+        except ValueError as e:
+            print(f'❌ Unexpected error {e}')
+            
         student_list.append(student)
 
     display_students(student_list) 
 
-    return  student_list
+    return student_list
 
