@@ -57,8 +57,8 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
 
         # Create and process Student
         student = Student(student_id, name, passing_grade, weights if is_weighted else [], is_weighted)
-        student.add_marks(marks)
-        student.check_condition()
+        student.set_marks(marks)
+        student.condition()
 
         student_list.append(student)
 
