@@ -33,7 +33,7 @@ class Student:
         self.condition = ''
         self.is_weighted = is_weighted
 
-    def add_marks(self, marks):
+    def set_marks(self, marks):
         '''
         Validate each mark using validate_grade and add valid marks to the student.
         
@@ -69,13 +69,15 @@ class Student:
         else:
             return sum(self.marks) / len(self.marks) if self.marks else 0
 
-    def check_condition(self):
+
+    @property
+    def condition(self):
         '''
         Determine whether the student is Approved or Failed based on the final average.
-        
-        Returns:
-            None
+
+        Como é uma @property, é acessado como um atributo (ex: student.condition),
+        mas o cálculo é refeito a cada acesso.
         '''
         average = self.calculate_average()
-        self.condition = "Approved" if average >= self.passing_grade else "Failed"
-        return self.condition
+        # Apenas retorna o valor, NUNCA o armazena em 'self.condition'
+        return "Approved" if average >= self.passing_grade else "Failed"
