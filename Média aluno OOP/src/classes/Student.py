@@ -1,86 +1,83 @@
-from src.functions.validations import validate_grade, validate_names, validate_weights  
+# Agora importamos as validações DIRETAMENTE na classe
+from src.functions.validations import validate_grade, validate_names, validate_weights
 
 class Student:
     '''
-    Represents a student with name, grades, weights, and passing condition.
+    Representa um aluno com nome, notas, pesos e condição de aprovação.
+    Os atributos são protegidos e validados através de setters.
     
-    Attributes:
-        name (str): The student's name.
-        passing_grade (float): The minimum grade required to pass.
-        marks (list): List of the student's grades.
-        weights_marks (list): List of the weights for each grade (optional).
-        is_weighted (bool): Whether the average calculation should be weighted.
-
-
-    Properties:     
-       condition (str): "Approved" if average >= passing_grade, else "Failed".
+    Attributes (privados):
+        _student_id (int): O ID do aluno (read-only).
+        _name (str): O nome do aluno.
+        _passing_grade (float): A nota mínima para aprovação.
+        _marks (list): Lista de notas do aluno.
+        _weights_marks (list): Lista de pesos para cada nota.
+        _is_weighted (bool): Se o cálculo da média deve ser ponderado.
     
+    Properties (públicas):
+        student_id (int): Getter para o ID.
+        name (str): Getter e Setter para o nome (valida ao setar).
+        passing_grade (float): Getter e Setter para a nota de corte (valida ao setar).
+        marks (list): Getter e Setter para as notas (valida ao setar).
+        weights_marks (list): Getter e Setter para os pesos (valida ao setar).
+        is_weighted (bool): Getter e Setter para o flag de média ponderada.
+        condition (str): Getter (read-only) para a condição ("Approved" ou "Failed").
+        average (float): Getter (read-only) para a média calculada.
     '''
     
     def __init__(self, student_id, name, passing_grade, weights_marks=None, is_weighted=False):
         '''
-        Initialize a Student instance with student's id, name, passing grade, and optional weights.
-        
-        Args:
-            student_id: The student's id.
-            name (str): The student's name.
-            passing_grade (float): Minimum grade to pass.
-            weights_marks (list, optional): Weights for each mark if using weighted average.
-            is_weighted (bool, optional): Indicates if calculation should be weighted.
+        Inicializa a instância do Aluno.
+        O __init__ agora usa os setters públicos, garantindo que
+        mesmo os dados iniciais sejam validados.
         '''
-
-        self._student_id = student_id
+        self._student_id = student_id  # ID é definido como "privado" e não terá setter (read-only)
+        
+        # Chama os setters públicos para validar os dados de entrada
         self.name = name
         self.passing_grade = passing_grade
-        self.weights_marks = weights_marks if weights_marks else []
         self.is_weighted = is_weighted
-        self._marks = []
+        self.weights_marks = weights_marks if weights_marks else []
+        self._marks = []  # Começa com uma lista de notas vazia (será setada via .marks)
 
-
-
-# --- Propriedade student_id (Read-Only) ---
+    # --- Propriedade student_id (Read-Only) ---
     @property
     def student_id(self):
         return self._student_id
 
-
-
-# --- Propriedades Name (Read/Write com Validação) ---
+    # --- Propriedades Name (Read/Write com Validação) ---
     @property
     def name(self):
         return self._name
 
     @name.setter
     def name(self, new_name):
-        valid_name, error = validate_names(new_name)
+        validated_name, error = validate_names(new_name)
         if error:
-            raise ValueError(error)
+            raise ValueError(error)  # Levanta um erro em vez de imprimir
         self._name = validated_name
 
-
-
-# --- Propriedade passing_grade (Read/Write com Validação) ---
+    # --- Propriedade passing_grade (Read/Write com Validação) ---
     @property
     def passing_grade(self):
         return self._passing_grade
 
     @passing_grade.setter
     def passing_grade(self, new_grade):
+        # validate_grade espera uma string, então convertemos
         validated_grade, error = validate_grade(str(new_grade))
         if error:
             raise ValueError(error)
         self._passing_grade = validated_grade
 
-
-
-# --- Propriedade marks (Read/Write com Validação) ---
+    # --- Propriedade marks (Read/Write com Validação) ---
     @property
     def marks(self):
         return self._marks
 
     @marks.setter
     def marks(self, new_marks_list):
-    '''
+        '''
         Setter para as notas. Valida cada nota na lista.
         Levanta um ValueError se qualquer nota for inválida.
         '''
@@ -103,8 +100,6 @@ class Student:
              
         self._marks = validated_marks
 
-
-
     # --- Propriedade weights_marks (Read/Write com Validação) ---
     @property
     def weights_marks(self):
@@ -115,6 +110,10 @@ class Student:
         '''
         Setter para os pesos. Valida a lista de pesos.
         '''
+        # NOTA: A sua função `validate_weights` original
+        # espera uma string separada por espaços. Uma classe deve
+        # idealmente receber uma lista. Aqui, validamos a lista diretamente
+        # para um melhor design OOP.
         
         if not isinstance(new_weights_list, list):
             raise ValueError("Pesos devem ser uma lista de números.")
@@ -129,9 +128,7 @@ class Student:
         
         self._weights_marks = new_weights_list
 
-
-
-# --- Propriedade is_weighted (Read/Write) ---
+    # --- Propriedade is_weighted (Read/Write) ---
     @property
     def is_weighted(self):
         return self._is_weighted
@@ -142,9 +139,8 @@ class Student:
             raise ValueError("is_weighted deve ser um valor booleano (True/False).")
         self._is_weighted = value
 
-
-
-# --- Propriedade "average" (Calculada, Read-Only) ---
+    # --- Propriedade "average" (Calculada, Read-Only) ---
+    # Renomeei de calculate_average para 'average' para seguir o padrão
     @property
     def average(self):
         '''
@@ -163,9 +159,7 @@ class Student:
         else:
             return sum(self._marks) / len(self._marks) if self._marks else 0.0
 
-
-
-# --- Propriedade "condition" (Calculada, Read-Only) ---
+    # --- Propriedade "condition" (Calculada, Read-Only) ---
     @property
     def condition(self):
         '''
