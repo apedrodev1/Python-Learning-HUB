@@ -168,3 +168,22 @@ class Student:
         '''
         # Agora ela usa a propriedade 'average' e 'passing_grade'
         return "Approved" if self.average >= self.passing_grade else "Failed"
+
+
+    def to_dict(self):
+        """
+        Retorna uma representação serializável (dicionário) do aluno.
+        Ideal para exportar para JSON ou XML.
+        
+        Este método lê as propriedades públicas (@property) da classe.
+        """
+        return {
+            "student_id": self.student_id,
+            "name": self.name,
+            "marks": self.marks,
+            "weights_marks": self.weights_marks,
+            "is_weighted": self.is_weighted,
+            "passing_grade": self.passing_grade,
+            "average": round(self.average, 2), # Arredonda a média para uma exportação limpa
+            "condition": self.condition
+        }
