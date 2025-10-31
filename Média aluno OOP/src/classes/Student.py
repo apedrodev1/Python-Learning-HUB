@@ -38,7 +38,8 @@ class Student:
         self.passing_grade = passing_grade
         self.is_weighted = is_weighted
         self.weights_marks = weights_marks if weights_marks else []
-        self._marks = []  # Começa com uma lista de notas vazia (será setada via .marks)
+        self._marks = []  
+        self._is_deleted = False
 
     # --- Propriedade student_id (Read-Only) ---
     @property
@@ -168,6 +169,19 @@ class Student:
         '''
         # Agora ela usa a propriedade 'average' e 'passing_grade'
         return "Approved" if self.average >= self.passing_grade else "Failed"
+
+    @property
+    def is_deleted(self):
+        '''
+        Indica se o aluno foi marcado como deletado.
+        '''
+        return self._is_deleted
+
+    def mark_as_deleted(self):
+        '''
+        Marca o aluno como deletado.
+        '''
+        self._is_deleted = True
 
 
     def to_dict(self):
