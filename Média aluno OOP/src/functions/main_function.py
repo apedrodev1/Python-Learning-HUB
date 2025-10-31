@@ -1,5 +1,6 @@
 from src.classes.Student import Student
 from ..functions.show_students import display_students
+from ..utils.helpers import generate_student_ids
 from ..functions.validations import (
     validate_grade,
     validate_names, 
@@ -24,8 +25,14 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
     is_weighted = way_to_calculate == "1"
     student_list = []
 
-    for i in range(students_quantity):
-        student_id = i + 1
+        # Initialize the ID generator
+    id_generator = generate_student_ids(start=1)
+
+    for _ in range(students_quantity): 
+        
+        # Call the ID generator for first time
+        student_id = next(id_generator) 
+
         print(f"\n📘 Student {student_id}")
 
         # Validate student name
@@ -67,4 +74,3 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
     display_students(student_list) 
 
     return student_list
-
