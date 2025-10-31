@@ -62,7 +62,7 @@ def show_edit_form(student):
         elif choice == '4':
             confirm = input(f"⚠️  Are you sure you want to delete {student.name}? (y/n): ").lower()
             if confirm == 'y':
-                student.deleted = True 
+                student.mark_as_deleted()
                 print("\n🗑️  Student successfully deleted.") 
                 break
             else:

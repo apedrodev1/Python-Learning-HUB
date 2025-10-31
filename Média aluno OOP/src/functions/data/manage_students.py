@@ -35,8 +35,7 @@ def edit_student_edits(student_list):
 
     while True:
         clear_screen()
-
-        active_students = [s for s in student_list if not getattr(s, "deleted", False)]
+        active_students = [s for s in student_list if not s.is_deleted]
 
         print("\n📋 Students Available for Editing:\n")
         print("─" * 100)
@@ -66,7 +65,7 @@ def edit_student_edits(student_list):
                 edited = True
                 found = True
 
-                if hasattr(student, 'deleted') and student.deleted:
+                if student.is_deleted: # <-- PARA ISSO
                     student_list.remove(student)
                 break
 
