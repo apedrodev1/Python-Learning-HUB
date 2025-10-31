@@ -27,7 +27,6 @@ def main():
         )
         
         # Ask to edit one or mutiples students
-        edit_student_data(students_list)
         edited = edit_student_data(students_list)
         # Ask if the User wants to export the data
         if edited:
