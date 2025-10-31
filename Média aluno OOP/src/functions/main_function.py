@@ -36,40 +36,44 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
         print(f"\n📘 Student {student_id}")
 
         # Validate student name
-        while True:
-            name_input = input("Enter student's name: ")
-            name, error = validate_names(name_input)
-            if error:
-                print(f'❌ {error}')
-            else:
-                break
-
-        # Determine number of grades to collect
-        if is_weighted:
-            num_marks = len(weights)
-        else:
-            num_marks = number_of_marks
-
-        # Collect grades
-        marks = []
-        for j in range(num_marks):
+        try:
             while True:
-                mark_input = input(f"Enter grade {j + 1}: ")
-                mark, error = validate_grade(mark_input)
-                if error: 
+                name_input = input("Enter student's name: ")
+                name, error = validate_names(name_input)
+                if error:
                     print(f'❌ {error}')
                 else:
-                    marks.append(mark)
                     break
 
-        # Create and process Student
-        student = Student(student_id, name, passing_grade, weights if is_weighted else [], is_weighted)
-        try:
-            student.marks = marks
-        except ValueError as e:
-            print(f'❌ Unexpected error {e}')
+            # Determine number of grades to collect
+            if is_weighted:
+                num_marks = len(weights)
+            else:
+                num_marks = number_of_marks
+
+            # Collect grades
+            marks_input_list = []
+            for j in range(num_marks):
+                while True:
+                    mark_input = input(f"Enter grade {j + 1}: ")
+                    mark, error = validate_grade(mark_input)
+                    if error: 
+                        print(f'❌ {error}')
+                    else:
+                        marks_input_list.append(mark)
+                        break
+
+
+            # Create and process Student
+            student = Student(student_id, name, passing_grade, weights if is_weighted else [], is_weighted)
+            student.marks = marks_input_list    
             
-        student_list.append(student)
+            student_list.append(student)
+
+        except ValueError as e:
+                # Se o Student.__init__ ou o student.marks falharem
+                print(f"❌ Erro ao criar aluno {name}: {e}")
+                print("Por favor, tente este aluno novamente.")
 
     display_students(student_list) 
 
