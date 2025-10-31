@@ -1,7 +1,6 @@
-# Modules imported
 from src.functions.parameters import get_main_parameters
 from src.functions.main_function import process_students
-from src.functions.data.edit_student import edit_student_data
+from src.functions.data.manage_students import edit_student_edits
 from src.functions.export.export_wrapper import export_students 
 from src.functions.loop_control import ask_to_retry
 
@@ -26,17 +25,15 @@ def main():
             number_of_marks
         )
         
-        # Ask to edit one or mutiples students
-        edited = edit_student_data(students_list)
         # Ask if the User wants to export the data
-        if edited:
-            export_students(students_list)
-
+        edit_student_edits(students_list) 
+        
+        
+        export_students(students_list)
 
         # Ask the user if they want to run the program again
         if not ask_to_retry():
             break
     
-
 if __name__ == "__main__":
     main()
