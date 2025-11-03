@@ -6,9 +6,9 @@ from ..validations import (
     validate_yes_no
 )
 
-def edit_student_edits(student_list):
+def edit_student_edits(student_list, repository):
     '''
-    Allows the user to edit one or more students in the list.
+    Allows the user to edit one or more students in the list. Also receives the database repository to save changes.
 
     Args:
         student_list (list): List containing all Student instances.
@@ -16,12 +16,13 @@ def edit_student_edits(student_list):
     Returns:
         bool: True if at least one edition occurred, else False.
     '''
+
     if not student_list:
         print("❌ No students available to edit.")
         return False
 
     while True:
-        edit_any_input = input('\n✏️ Would you like to edit any student? (y/n): ')
+        edit_any_input = input('\n ✏️  Would you like to edit any student? (y/n): ')
         edit_any, error = validate_yes_no(edit_any_input)
         if error:
             print(f"❌ {error}")
@@ -61,11 +62,11 @@ def edit_student_edits(student_list):
         found = False
         for student in student_list:
             if student.student_id == input_id:
-                show_edit_form(student)
+                show_edit_form(student, repository)
                 edited = True
                 found = True
 
-                if student.is_deleted: # <-- PARA ISSO
+                if student.is_deleted: 
                     student_list.remove(student)
                 break
 
