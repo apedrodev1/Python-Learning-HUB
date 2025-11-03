@@ -1,3 +1,12 @@
+"""
+Contains all SQL query constants used by the StudentRepository.
+
+Storing queries as constants in a separate module makes the
+repository logic cleaner and easier to maintain.
+"""
+
+# --- Table Creation Queries ---
+
 CREATE_STUDENTS_TABLE = """
 CREATE TABLE IF NOT EXISTS students (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -7,7 +16,7 @@ CREATE TABLE IF NOT EXISTS students (
 );
 """
 
-# SQL para criar a tabela de notas
+# SQL to create the grades table
 CREATE_GRADES_TABLE = """
 CREATE TABLE IF NOT EXISTS grades (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -18,7 +27,7 @@ CREATE TABLE IF NOT EXISTS grades (
 );
 """
 
-# --- Queries de CRUD ---
+# --- CRUD Queries ---
 
 INSERT_STUDENT = """
 INSERT INTO students (name, passing_grade, is_weighted) 
@@ -40,10 +49,11 @@ SET name = ?, passing_grade = ?, is_weighted = ?
 WHERE id = ?;
 """
 
-# --- NOVAS QUERIES DE DELETE ---
-# Esta query: apaga TODAS as notas antigas de um aluno
-# para que possamos inserir as novas (editadas).
+# --- DELETE Queries ---
+
+# This query deletes ALL old grades for a student
+# so we can insert the newly edited ones.
 DELETE_GRADES_FOR_STUDENT = "DELETE FROM grades WHERE student_id = ?;"
 
-DELETE_STUDENT_BY_ID = "DELETE FROM students WHERE id = ?;" 
-# (Graças ao 'ON DELETE CASCADE', as notas serão apagadas automaticamente)
+# (Thanks to 'ON DELETE CASCADE', associated grades will be deleted automatically)
+DELETE_STUDENT_BY_ID = "DELETE FROM students WHERE id = ?;"
