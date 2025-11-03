@@ -34,4 +34,16 @@ SELECT_ALL_STUDENTS = "SELECT * FROM students;"
 
 SELECT_GRADES_FOR_STUDENT = "SELECT mark_value, weight_value FROM grades WHERE student_id = ?;"
 
-# (Adicionaremos UPDATE e DELETE depois)
+UPDATE_STUDENT_DATA = """
+UPDATE students
+SET name = ?, passing_grade = ?, is_weighted = ?
+WHERE id = ?;
+"""
+
+# --- NOVAS QUERIES DE DELETE ---
+# Esta query: apaga TODAS as notas antigas de um aluno
+# para que possamos inserir as novas (editadas).
+DELETE_GRADES_FOR_STUDENT = "DELETE FROM grades WHERE student_id = ?;"
+
+DELETE_STUDENT_BY_ID = "DELETE FROM students WHERE id = ?;" 
+# (Graças ao 'ON DELETE CASCADE', as notas serão apagadas automaticamente)
