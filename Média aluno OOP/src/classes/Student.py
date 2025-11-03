@@ -1,195 +1,275 @@
-# Agora importamos as validações DIRETAMENTE na classe
+"""
+Contains the Student class, the core data model for the application.
+
+This module defines the Student data structure, including its
+self-validating properties and calculated attributes.
+"""
+
 from src.functions.validations import validate_grade, validate_names, validate_weights
 
 class Student:
-    '''
-    Representa um aluno com nome, notas, pesos e condição de aprovação.
-    Os atributos são protegidos e validados através de setters.
-    
-    Attributes (privados):
-        _student_id (int): O ID do aluno (read-only).
-        _name (str): O nome do aluno.
-        _passing_grade (float): A nota mínima para aprovação.
-        _marks (list): Lista de notas do aluno.
-        _weights_marks (list): Lista de pesos para cada nota.
-        _is_weighted (bool): Se o cálculo da média deve ser ponderado.
-    
-    Properties (públicas):
-        student_id (int): Getter para o ID.
-        name (str): Getter e Setter para o nome (valida ao setar).
-        passing_grade (float): Getter e Setter para a nota de corte (valida ao setar).
-        marks (list): Getter e Setter para as notas (valida ao setar).
-        weights_marks (list): Getter e Setter para os pesos (valida ao setar).
-        is_weighted (bool): Getter e Setter para o flag de média ponderada.
-        condition (str): Getter (read-only) para a condição ("Approved" ou "Failed").
-        average (float): Getter (read-only) para a média calculada.
-    '''
+   
+    """
+    Represents a student with name, grades, weights, and passing condition.
+
+    This class is self-validating, using setters and properties to ensure
+    data integrity.
+
+    Attributes:
+        _student_id (int): The student's read-only database ID.
+        _name (str): The student's name.
+        _passing_grade (float): The minimum grade to pass.
+        _marks (list): List of the student's grades (as floats).
+        _weights_marks (list): List of weights for each grade (as floats).
+        _is_weighted (bool): Flag for weighted average calculation.
+        _is_deleted (bool): Flag for soft delete status.
+    """
     
     def __init__(self, student_id, name, passing_grade, weights_marks=None, is_weighted=False):
-        '''
-        Inicializa a instância do Aluno.
-        O __init__ agora usa os setters públicos, garantindo que
-        mesmo os dados iniciais sejam validados.
-        '''
-        self._student_id = student_id  # ID é definido como "privado" e não terá setter (read-only)
+       
+        """
+        Initializes a new Student instance.
+
+        The constructor uses public setters to ensure that even
+        initial data is validated.
+
+        Args:
+            student_id (int or None): The student's database ID.
+                Can be None if the student has not yet been saved.
+            name (str): The student's name.
+            passing_grade (float): The minimum grade to pass.
+            weights_marks (list, optional): List of weights for weighted average.
+            is_weighted (bool, optional): Sets if the average is weighted.
+        """
+      
+        self._student_id = student_id  # Read-only private attribute
         
-        # Chama os setters públicos para validar os dados de entrada
+
+        # Public setters validate the incoming data
         self.name = name
         self.passing_grade = passing_grade
         self.is_weighted = is_weighted
         self.weights_marks = weights_marks if weights_marks else []
-        self._marks = []  
+        self._marks = []  # Default to empty list
         self._is_deleted = False
 
-    # --- Propriedade student_id (Read-Only) ---
+
+    # --- student_id Property (Read-Only) ---
+
     @property
     def student_id(self):
+        """int: The student's unique database identifier."""
         return self._student_id
 
-    # --- Propriedades Name (Read/Write com Validação) ---
+
+    # --- Name Property (Read/Write with Validation) ---
+
     @property
     def name(self):
+        """str: The student's full name."""
         return self._name
+
 
     @name.setter
     def name(self, new_name):
+        """
+        Sets the student's name after validation.
+
+        Args:
+            new_name (str): The new name for the student.
+
+        Raises:
+            ValueError: If the name is invalid (e.g., contains numbers).
+        """
         validated_name, error = validate_names(new_name)
         if error:
-            raise ValueError(error)  # Levanta um erro em vez de imprimir
+            raise ValueError(error)  # Raise an error instead of printing
         self._name = validated_name
 
-    # --- Propriedade passing_grade (Read/Write com Validação) ---
+
+    # --- passing_grade Property (Read/Write with Validation) ---
+
     @property
     def passing_grade(self):
+        """float: The minimum grade required to pass."""
         return self._passing_grade
+
 
     @passing_grade.setter
     def passing_grade(self, new_grade):
-        # validate_grade espera uma string, então convertemos
+        """
+        Sets the passing grade after validation.
+
+        Args:
+            new_grade (str or float): The new passing grade (0-10).
+
+        Raises:
+            ValueError: If the grade is not a valid number between 0-10.
+        """
+        # The validation function expects a string, so we convert it
         validated_grade, error = validate_grade(str(new_grade))
         if error:
             raise ValueError(error)
         self._passing_grade = validated_grade
 
-    # --- Propriedade marks (Read/Write com Validação) ---
+
+    # --- marks Property (Read/Write with Validation) ---
+   
     @property
     def marks(self):
+        """list: The list of the student's grades (as floats)."""
         return self._marks
+
 
     @marks.setter
     def marks(self, new_marks_list):
-        '''
-        Setter para as notas. Valida cada nota na lista.
-        Levanta um ValueError se qualquer nota for inválida.
-        '''
+
+        """
+        Sets the student's list of marks, validating each item.
+
+        Args:
+            new_marks_list (list): A list of marks (can be str or float).
+
+        Raises:
+            ValueError: If any mark in the list is invalid or if
+                no valid marks were provided.
+        """
+
         validated_marks = []
         errors = []
+
         for mark in new_marks_list:
-            # validate_grade espera string
+            # The validation function expects a string
             mark_value, error = validate_grade(str(mark))
             if error:
-                errors.append(f"Nota inválida: '{mark}'. {error}")
+                errors.append(f"Invalid mark: '{mark}'. {error}")
             else:
                 validated_marks.append(mark_value)
         
         if errors:
-            # Se houver UM erro, rejeita a lista inteira
+            # If there's ANY error, reject the whole list
             raise ValueError("\n".join(errors))
             
         if not validated_marks and len(new_marks_list) > 0:
-             raise ValueError("Nenhuma nota válida foi fornecida.")
-             
+             raise ValueError("No valid marks were provided.")
+
+
         self._marks = validated_marks
 
-    # --- Propriedade weights_marks (Read/Write com Validação) ---
+
+    # --- weights_marks Property (Read/Write with Validation) ---
+   
     @property
     def weights_marks(self):
+        """list: The list of weights (as floats) for each mark."""
         return self._weights_marks
+
 
     @weights_marks.setter
     def weights_marks(self, new_weights_list):
-        '''
-        Setter para os pesos. Valida a lista de pesos.
-        '''
-        # NOTA: A sua função `validate_weights` original
-        # espera uma string separada por espaços. Uma classe deve
-        # idealmente receber uma lista. Aqui, validamos a lista diretamente
-        # para um melhor design OOP.
-        
+        """
+        Sets the list of weights, validating the list.
+
+        Args:
+            new_weights_list (list): A list of weights (as floats).
+
+        Raises:
+            ValueError: If the list of weights is invalid (e.g., not a
+                list, contains values <= 0, or sum is not 10 if weighted).
+        """
         if not isinstance(new_weights_list, list):
-            raise ValueError("Pesos devem ser uma lista de números.")
+            raise ValueError("Weights must be a list of numbers.")
 
         if self._is_weighted:
             if not new_weights_list:
-                raise ValueError("A lista de pesos não pode estar vazia para média ponderada.")
+                raise ValueError("The weights list cannot be empty for a weighted average.")
             if any(w <= 0 for w in new_weights_list):
-                raise ValueError("Todos os pesos devem ser maiores que zero.")
+                raise ValueError("All weights must be greater than zero.")
             if sum(new_weights_list) != 10:
-                raise ValueError(f"A soma dos pesos deve ser 10, mas foi {sum(new_weights_list)}.")
+                raise ValueError(f"The sum of weights must be 10, but got {sum(new_weights_list)}.")
         
         self._weights_marks = new_weights_list
 
-    # --- Propriedade is_weighted (Read/Write) ---
+
+    # --- is_weighted Property (Read/Write) ---
+
     @property
     def is_weighted(self):
+        """bool: True if the average is weighted, False otherwise."""
         return self._is_weighted
 
     @is_weighted.setter
     def is_weighted(self, value):
+        """
+        Sets the weighted status flag.
+
+        Args:
+            value (bool): The new value for the flag.
+
+        Raises:
+            ValueError: If the provided value is not a boolean.
+        """
         if not isinstance(value, bool):
-            raise ValueError("is_weighted deve ser um valor booleano (True/False).")
+            raise ValueError("is_weighted must be a boolean (True/False).")
         self._is_weighted = value
 
-    # --- Propriedade "average" (Calculada, Read-Only) ---
-    # Renomeei de calculate_average para 'average' para seguir o padrão
+
+    # --- Calculated Properties (Read-Only) ---
+
+
     @property
     def average(self):
-        '''
-        Calcula e retorna a média final do aluno.
-        '''
+        """
+        float: The student's calculated final average, rounded to 2 decimals.
+
+        Calculates the average (arithmetic or weighted) based on the
+        student's marks and weights. Returns 0.0 if no marks are present.
+        """
         if self._is_weighted and self._weights_marks:
-            # Garante que temos o mesmo número de notas e pesos
+            # Ensure marks and weights lists match to prevent errors
             if len(self._marks) != len(self._weights_marks):
-                # Isso pode ser um erro ou pode ser que as notas ainda não foram setadas
-                # Por agora, retornamos 0 para evitar um crash
                 return 0.0 
                 
             total_weight = sum(self._weights_marks)
             weighted_sum = sum(mark * weight for mark, weight in zip(self._marks, self._weights_marks))
-            return weighted_sum / total_weight if total_weight else 0.0
+            avg = weighted_sum / total_weight if total_weight else 0.0
         else:
-            return sum(self._marks) / len(self._marks) if self._marks else 0.0
+            avg = sum(self._marks) / len(self._marks) if self._marks else 0.0
+        
+        return round(avg, 2)
 
-    # --- Propriedade "condition" (Calculada, Read-Only) ---
+
     @property
     def condition(self):
-        '''
-        Calcula e retorna a condição ATUAL (Approved/Failed)
-        baseado na média e na nota de corte.
-        '''
-        # Agora ela usa a propriedade 'average' e 'passing_grade'
+        """
+        str: The student's calculated condition ("Approved" or "Failed").
+
+        Compares the 'average' property against the 'passing_grade' property.
+        """
         return "Approved" if self.average >= self.passing_grade else "Failed"
+
 
     @property
     def is_deleted(self):
-        '''
-        Indica se o aluno foi marcado como deletado.
-        '''
+        """bool: True if the student has been marked for deletion (soft delete)."""
         return self._is_deleted
 
-    def mark_as_deleted(self):
-        '''
-        Marca o aluno como deletado.
-        '''
-        self._is_deleted = True
 
+
+    # --- Public Methods ---
+
+    def mark_as_deleted(self):
+        """Marks the student as deleted (soft delete)."""
+        self._is_deleted = True
 
     def to_dict(self):
         """
-        Retorna uma representação serializável (dicionário) do aluno.
-        Ideal para exportar para JSON ou XML.
-        
-        Este método lê as propriedades públicas (@property) da classe.
+        Returns a serializable dictionary representation of the student.
+
+        This helps ../functions/export/export_wrapper.py to export to JSON or XML.
+
+        Returns:
+            dict: A dictionary containing the student's public data.
         """
         return {
             "student_id": self.student_id,
@@ -198,6 +278,6 @@ class Student:
             "weights_marks": self.weights_marks,
             "is_weighted": self.is_weighted,
             "passing_grade": self.passing_grade,
-            "average": round(self.average, 2), # Arredonda a média para uma exportação limpa
+            "average": self.average, 
             "condition": self.condition
         }
