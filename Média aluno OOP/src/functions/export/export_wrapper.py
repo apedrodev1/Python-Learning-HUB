@@ -11,7 +11,7 @@ def export_students(student_list):
         return
 
     while True:
-        print("\n#🖨️  Export Options:")
+        print("\n 🖨️  Export Options:")
         print("1 - Export to JSON")
         print("2 - Export to XML")
         print("0 - Skip export\n")
