@@ -1,3 +1,11 @@
+"""
+Handles the core logic for processing and creating new students.
+
+This module is responsible for the user-facing workflow of gathering
+student data (name, grades) and persisting it to the database
+via the repository.
+"""
+
 from src.classes.Student import Student
 from ..functions.validations import (
     validate_grade,
@@ -6,26 +14,31 @@ from ..functions.validations import (
 )
 
 def process_students(students_quantity, way_to_calculate, passing_grade, weights, number_of_marks, repository):
-    '''
-    Processes student data and returns a list of Student objects.
+    """
+    Gathers data for a specified number of new students and saves them.
+
+    Iterates 'students_quantity' times, prompting the user for a name
+    and the required number of grades. It validates this input
+    and then uses the provided repository to create and save each
+    new Student object to the database.
 
     Args:
-        students_quantity (int): Number of students to process.
-        way_to_calculate (str): Calculation method ("1" for weighted).
-        passing_grade (float): Minimum average required to pass.
-        weights (list): List of weights for grades if weighted average is chosen.
-        number_of_marks(int): total of marks per student, if arithmetic is chosen.
-        repository (Repository): The repository to update student data.
+        students_quantity (int): The total number of new students to process.
+        way_to_calculate (str): The calculation method ("0" or "1").
+        passing_grade (float): The minimum grade required to pass.
+        weights (list): A list of weights (if 'is_weighted' is True).
+        number_of_marks (int): The number of grades per student (if arithmetic).
+        repository (StudentRepository): The repository object for database access.
 
     Returns:
         None
-    '''
+    """
 
     is_weighted = way_to_calculate == "1"
 
     for i in range(students_quantity): 
         print(f"\n📘 Inserting Student {i+1} of {students_quantity}")
-      
+    
         # Validate student name
         while True:
             name_input = input("Enter student's name: ")
@@ -53,7 +66,7 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
                     marks_input_list.append(mark)
                     break
         
-        # This inner try/except block is correct and handles creation
+        # Create the Student object and save it to the database
         try:
             student = Student(
                 student_id=None, # ID will be set by the DB
@@ -63,11 +76,10 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
                 is_weighted=is_weighted
             )
             
-          
             student.marks = marks_input_list 
             repository.add_student(student)
         
         except ValueError as e:
-            print(f'❌ Erro ao validar dados do aluno: {e}')
+            print(f'❌ Error validating student data: {e}')
         except Exception as e:
-            print(f'❌ Erro inesperado ao salvar aluno {name}: {e}')
+            print(f'❌ Unexpected error saving student {name}: {e}')
