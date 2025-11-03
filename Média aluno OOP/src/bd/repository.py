@@ -98,15 +98,71 @@ class StudentRepository:
                     weights_marks=weights if is_weighted else [], # Só passa pesos se for ponderada
                     is_weighted=is_weighted
                 )
+
                 student.marks = marks # O setter validará as notas
                 
                 student_list.append(student)
                 
             return student_list
-            
+        
         except sqlite3.Error as e:
             print(f"Erro ao buscar alunos: {e}")
             return [] # Retorna lista vazia em caso de erro
+        
+
+    def update_student(self, student):
+        """
+        Atualiza um aluno existente no banco de dados.
+        A estratégia é: Atualizar a tabela 'students' e 
+        recriar (apagar e inserir) as notas na tabela 'grades'.
+        """
+        try:
+            cursor = self.conn.cursor()
+            
+            # 1. Atualiza os dados principais na tabela 'students'
+            cursor.execute(queries.UPDATE_STUDENT_DATA, (
+                student.name,
+                student.passing_grade,
+                1 if student.is_weighted else 0,
+                student.student_id # Usa o ID do aluno para o 'WHERE'
+            ))
+            
+            # 2. Apaga TODAS as notas e pesos antigos da tabela 'grades'
+            cursor.execute(queries.DELETE_GRADES_FOR_STUDENT, (student.student_id,))
+            
+            # 3. Re-insere as notas e pesos (agora atualizados)
+            weights = student.weights_marks if student.is_weighted else [1] * len(student.marks)
+            
+            for mark, weight in zip(student.marks, weights):
+                cursor.execute(queries.INSERT_GRADE, (
+                    student.student_id,
+                    mark,
+                    weight
+                ))
+                
+            self.conn.commit()
+            print(f"Aluno {student.name} (ID: {student.student_id}) atualizado no banco.")
+            
+        except sqlite3.Error as e:
+            self.conn.rollback()
+            print(f"Erro ao atualizar aluno {student.name}: {e}")
+
+
+    def delete_student(self, student_id):
+        """
+        Deleta um aluno do banco de dados usando seu ID.
+        As notas serão apagadas em cascata (ON DELETE CASCADE).
+        """
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute(queries.DELETE_STUDENT_BY_ID, (student_id,))
+            self.conn.commit()
+            print(f"Aluno (ID: {student_id}) deletado do banco.")
+            
+        except sqlite3.Error as e:
+            self.conn.rollback()
+            print(f"Erro ao deletar aluno (ID: {student_id}): {e}")
+
 
     def close(self):
         """Fecha a conexão com o banco de dados."""
