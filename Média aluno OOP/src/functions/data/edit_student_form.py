@@ -1,4 +1,4 @@
-def show_edit_form(student):
+def show_edit_form(student, repository):
     """
     Updates the data of a single student object.
     Args:
@@ -21,6 +21,8 @@ def show_edit_form(student):
         if choice == "1":
             try:
                 student.name = input("Enter new name: ") 
+                repository.update_student(student)
+
                 print(f"✅ Name updated to: {student.name}")
                 break 
             except ValueError as e:
@@ -35,6 +37,8 @@ def show_edit_form(student):
                     continue
 
                 student.marks = new_grades_input
+                repository.update_student(student)
+
                 print(f"✅ Grades updated. Average: {student.average:.2f}")
                 break
             except ValueError as e:
@@ -44,6 +48,7 @@ def show_edit_form(student):
             try:
                 new_weights_str = input("Enter new weights (separated by space): ")
                 new_weights_input = new_weights_str.split() 
+
                 current_marks_count = len(student.marks)
                 if len(new_weights_input) != current_marks_count:
                     print(f"❌ You must enter exactly {current_marks_count} weights (to match the {current_marks_count} grades).")
@@ -52,6 +57,8 @@ def show_edit_form(student):
                 new_weights_list = [float(w) for w in new_weights_input]
                 
                 student.weights_marks = new_weights_list
+                repository.update_student(student)
+
                 print(f"✅ Weights updated.")
                 break
             except ValueError as e:
@@ -62,7 +69,9 @@ def show_edit_form(student):
         elif choice == '4':
             confirm = input(f"⚠️  Are you sure you want to delete {student.name}? (y/n): ").lower()
             if confirm == 'y':
+                repository.delete_student(student.student_id)
                 student.mark_as_deleted()
+                
                 print("\n🗑️  Student successfully deleted.") 
                 break
             else:
