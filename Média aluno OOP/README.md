@@ -179,6 +179,25 @@ Média aluno OOP/
 │       ├── colors.py
 │       └── formatters.py
 ```
+</br>
+
+---
+
+## 👨‍💻 Desenvolvedor
+
+<p align="center">
+  <img src="./src/media/img/apedrodev1-pic.jpg" width="150" alt="Foto de Pedro Augusto"/>
+</p>
+
+<p align="center">
+  <b>Pedro Augusto</b>  
+  <br>
+  <a href="https://github.com/apedrodev1">GitHub</a> &nbsp;|&nbsp;
+  <a href="https://www.linkedin.com/in/pedro-augusto-rocha-548b28110/">LinkedIn</a> &nbsp;|&nbsp;
+  <a href="https://www.instagram.com/apedrorocha/">Instagram</a>
+</p>
+
+
 ---
 
 
