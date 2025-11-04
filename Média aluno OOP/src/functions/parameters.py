@@ -1,3 +1,11 @@
+"""
+Handles the initial parameter setup for the application.
+
+This module is responsible for the user-facing workflow of gathering
+the initial batch of settings (like student quantity, average type,
+and passing grade) before the main processing begins.
+"""
+
 from ..functions.validations import (
     validate_quantity,
     validate_calculation_type,
@@ -7,15 +15,23 @@ from ..functions.validations import (
 
 def get_main_parameters():
     """
-    Requests the initial parameters:
-    - Number of students
-    - Type of calculation (arithmetic or weighted average)
-    - Minimum passing grade
-    - Number of grades per student (if arithmetic)
-    - Weights (if weighted)
+    Prompts the user to input the main parameters for the session.
+
+    This function runs an interactive console prompt to gather:
+    1.  The total number of new students to add.
+    2.  The calculation type (0 for arithmetic, 1 for weighted).
+    3.  The list of weights (if weighted) or the number of marks (if arithmetic).
+    4.  The minimum passing grade.
+
+    It validates each input and re-prompts on error.
 
     Returns:
-        tuple: (students_quantity, way_to_calculate, passing_grade, weights, number_of_marks)
+        tuple: A tuple containing the following five values:
+            (students_quantity (int),
+             way_to_calculate (str),
+             passing_grade (float),
+             weights (list),
+             number_of_marks (int or None))
     """
 
     weights = []
