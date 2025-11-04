@@ -1,9 +1,24 @@
+"""
+Utility functions for formatting student data into colored console strings.
+
+This module provides helper functions that take a Student object
+and return a formatted, color-coded string suitable for
+different parts of the console UI (e.g., reports, edit lists).
+"""
+
 from .colors import GREEN, RED, BLUE, YELLOW, RESET
 
 def format_student_line_for_edit(student):
     """
-    Returns a concise formatted and aligned line for student editing interface.
-    Shows ID, name, average, condition, and passing grade.
+    Returns a concise formatted line for the student editing interface.
+
+    Shows ID, name, average, condition, and passing grade with colors.
+
+    Args:
+        student (Student): The Student object to format.
+
+    Returns:
+        str: A formatted, colored string for the editing list.
     """
     avg = student.average
     condition = student.condition
@@ -18,11 +33,18 @@ def format_student_line_for_edit(student):
             f"Passing Grade: {YELLOW}({str(student.passing_grade).rjust(4)}){RESET}")
 
 
-
 def format_student_row_for_show(student): 
     """
-    Returns a detailed formatted and colored row for display in a report table.
-    Ideal for show_students.
+    Returns a detailed formatted row for display in the main report table.
+
+    Ideal for the `display_students` function. Shows ID, name, full marks list,
+    average, condition, and passing grade with colors.
+
+    Args:
+        student (Student): The Student object to format.
+
+    Returns:
+        str: A formatted, colored string for the main report table.
     """
     avg = student.average
     condition = student.condition
