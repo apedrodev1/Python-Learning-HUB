@@ -1,10 +1,27 @@
+"""
+Presents the user with export format options (JSON or XML).
+
+This module acts as a simple wrapper or router that displays a
+console menu and calls the corresponding exporter function
+(json_exporter or xml_exporter) based on user input.
+"""
+
 from .json_exporter import export_to_json
 from .xml_exporter import export_to_xml
 
 def export_students(student_list):
     """
     Handles user choice for exporting data (JSON or XML).
-    Skips if list is empty or user declines.
+
+    If the student list is empty, this function will print a message
+    and exit. Otherwise, it will loop until the user selects a valid
+    export format (1 for JSON, 2 for XML) or skips (0).
+
+    Args:
+        student_list (list[Student]): The list of Student objects to export.
+    
+    Returns:
+        None
     """
     if not student_list:
         print("⚠️  No students to export.")
