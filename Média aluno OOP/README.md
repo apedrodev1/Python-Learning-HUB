@@ -2,15 +2,19 @@
 
 <br>
 
-## Description
+## 📋 Description
 
 This project calculates student averages using Object-Oriented Programming (OOP) principles in Python. The system allows for both arithmetic and weighted averages based on user input and provides a simple report card with each student's status (pass or fail) based on a customizable passing average.
+
+The system uses a full SQLite database backend to provide persistent storage and full CRUD (Create, Read, Update, Delete) functionality. The architecture is built on a clean, object-oriented design, featuring a self-validating Student class (using @property setters) and a dedicated Data Access Layer (Repository Pattern) to ensure a clean separation between the application logic and the database.
 
 The application has evolved into a modular and scalable solution, now supporting full CRUD operations on student records and strict adherence to [PEP 257](https://peps.python.org/pep-0257/) conventions for documentation.
 
 <br>
 
-## How to Use
+---
+
+## 🛠️ How to Use
 
 1. **Clone the Repository**
 
@@ -32,60 +36,82 @@ python index.py
 ```
 
 6. **Interact with the Program**
+The database file (banco_de_dados.db) will be created automatically in src/bd/ on the first run.
+
+</br>
 
 ---
 
 ## ✅ Logical Order Summary
 
-<br>
-
 ### 🧠 Program Flow
 
 ```python
-get_main_parameters()
-process_students(students_quantity, way_to_calculate, passing_grade, weights,
-show_student_list())
+# 1. (index.py)
+# Connect to DB and initialize the Repository
+repo = StudentRepository(DB_PATH)
 
-if user_wants_to_correct:
-    correct_students()
-    show_student_list()  # after correction
+# 2. (index.py -> parameters.py)
+# Get user settings (how many to add, passing grade, etc.)
+students_quantity, ... = get_main_parameters()
 
-if user_wants_to_export:
-    export_students()
+# 3. (index.py -> main_function.py)
+# 'process_students' gathers data for NEW students and calls:
+repo.add_student(student) # -> CREATE
 
+# 4. (index.py)
+# Get the COMPLETE list of ALL students from the DB
+students_list = repo.get_all_students() # -> READ
+
+# 5. (index.py -> show_students.py)
+# Display the complete list to the user
+display_students(students_list)
+
+# 6. (index.py -> manage_students.py)
+# Run the main edit/delete workflow
+manage_student_edits(students_list, repo)
+    # -> (manage_students.py -> edit_student_form.py)
+    # The form calls 'repo.update_student(student)' -> UPDATE
+    # or 'repo.delete_student(student_id)' -> DELETE
+
+# 7. (index.py -> export_wrapper.py)
+# Export the complete list to JSON/XML
+export_students(students_list)
+
+# 8. (index.py -> loop_control.py)
+# Ask to repeat the entire process
 ask_to_retry()
+
+# 9. (index.py)
+# (In a 'finally' block) Ensure the DB connection is closed
+repo.close()
 ```
 <br>
 
 ### 👤 User Flow
 
 1. **Input of Initial Data**
-   - Type of average (simple or weighted)
-   - Minimum passing grade
-   - Weights of the grades (if weighted)
-   - Number of students
+The program asks how many new students you want to add.
 
 2. **Filling Student Data**
-   - Name
-   - Grades
+The program retrieves all students (new and old) from the DB and displays them.
 
 3. **Displaying Report**
-   - Student's name
-   - Final average
-   - Status (Passed/Failed)
-
+The program retrieves all students (new and old) from the DB and displays them.
 4. **Optional Correction**
-   - Name and/or grades
-   - Re-displays corrected report
+(CRUD): You can edit the name, grades, weights, or delete any student from the database.
+
 
 5. **Optional Export**
-   - JSON or XML format
+ You can export the complete list to JSON or XML.
 
 6. **Program Repeat Option**
+The loop restarts (without losing any data).
+
+</br>
 
 ---
 
-<br>
 
 ## 🧩 Use Case Diagram
 
@@ -98,56 +124,61 @@ ask_to_retry()
   >
 </p>
 
+</br>
+
 ---
 
-<br>
+
 
 ## 🚀 Features
 
-- **Object-Oriented Design:** Core functionality is built around a `Student` class that encapsulates student data and behaviors, such as calculating arithmetic and weighted averages.
+</br>
 
-- **User Choice for Average Type:** Flexibly choose between an arithmetic or weighted average, depending on grading needs.
+- **SQLite Database Backend:**  Data is fully persistent. All students and their grades are stored in an SQLite database (src/bd/banco_de_dados.db), ensuring no data is lost upon exit.
 
-- **Dynamic Grade and Weight Entry:** Enter any number of grades, and if using weighted averages, specify individual weights for each grade. The system ensures input validation and consistency.
+- **Full CRUD Functionality:** The system supports all database operations:
 
-- **Clear and Clean User Interface:** Incorporates screen-clearing between inputs (where supported) for a more organized and user-friendly experience.
+   - **Create: Adds new students** (process_students).
 
-- **Consistent Visual Layout:** The interface uses color formatting through `utils/colors.py`, improving readability and user engagement without making the layout visually overwhelming.
+   - **Read:** Reads all students from the database (get_all_students).
 
-- **Report Card Display:** After processing, the system displays a detailed report for each student, including:
-  - Name
-  - Grades
-  - Weights (if applicable)
-  - Required passing grade
-  - Calculated average
-  - Final pass/fail status
+   - **Update:** Edits names, grades, and weights of existing students (update_student).
 
-- **Data Export in JSON and XML Formats:** Student data can be easily exported in JSON and XML formats for backup, sharing, or integration with external systems.
+   - **Delete:** Permanently removes students from the database (delete_student).
 
-- **Modular Organization (PEP 257 Compliance):**  
-  The codebase is cleanly separated into modules and packages (e.g., `functions/`, `classes/`), promoting readability, maintainability, and scalability.  
-  All functions and classes follow PEP 257 guidelines, meaning they include clear, concise, and standardized docstrings.
+- **Repository Pattern (Data Access Layer):** A dedicated StudentRepository class (src/bd/repository.py) abstracts all SQL logic. The console interface (in functions/) does not know SQL; it simply calls methods like repo.add_student(student), making the code clean, modular, and easy to maintain.
 
-- **Scalability with Design Patterns:**  
-  The current architecture allows easy integration of new features, such as editing students by ID, additional data exports, or new calculation types.  
-  Future development can leverage patterns like Abstract Factory for creating different types of students (e.g., regular, scholarship students) without altering existing code.
+- **Self-Validating Class (OOP):** The core of the project, the Student class, is "bulletproof." It uses properties (@property) and setters (@name.setter) to validate all data before it is set. An attempt like student.name = "123" will fail with a ValueError, ensuring data integrity even before it reaches the database.
+
+- **PEP 257 Documentation:** All source code has been refactored to follow PEP 257 conventions, with clear docstrings in all modules, classes, and functions (in English).
+
+- **Data Export (JSON & XML):** Exports the complete list of students from the database to formatted students.json or students.xml files.
+
+- **Dynamic User Interface:** The program handles arithmetic and weighted averages, real-time user input validation, and a clean, colorful console interface.
+
+</br>
 
 ---
 
+## 🔮 Future Features
+
 <br>
 
-## 🔮 Future Features
 
 - `test_validations.py`: Unit tests for all validation routines.
 - Send the results via email.
 - Add graphs or other types of reports.
 - User interface (GUI or web-based).
 
----
 
 <br>
 
+---
+
 ## 🗂️ Folder Structure
+
+<br>
+
 
 ```
 Média aluno OOP/
