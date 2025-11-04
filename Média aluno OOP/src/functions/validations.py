@@ -1,3 +1,12 @@
+"""
+A utility module containing validation functions for user input.
+
+These functions are designed to be used by the console UI layer.
+They all follow a standard pattern: they accept a string input
+and return a (value, None) tuple on success, or a (None, error_message)
+tuple on failure.
+"""
+
 def validate_quantity(input_quantity):
     """
     Validates if the input is a positive integer.
@@ -6,7 +15,7 @@ def validate_quantity(input_quantity):
         input_quantity (str): The quantity input as a string.
 
     Returns:
-        tuple: (value, None) if valid, (None, error_message) if invalid.
+        tuple: (int, None) if valid, (None, str) if invalid.
     """
     try:
         value = int(input_quantity)
@@ -17,53 +26,54 @@ def validate_quantity(input_quantity):
         return None, "Please enter a valid positive integer."
 
 
-
 def validate_id(input_id):
     """
-     Validates if the id contains just numbers preceeded of 0.
-      
+    Validates if the input is a non-negative integer (ID).
+
     Args:
-        id (int): The student's id.
+        input_id (str): The student's ID input as a string.
 
     Returns:
-        tuple: () if valid, (None, error_message) if invalid.
-         """
-    
+        tuple: (int, None) if valid, (None, str) if invalid.
+    """
     try:
-        value=int(input_id)
-        if value>= 0:
+        value = int(input_id)
+        if value >= 0:
             return value, None
         return None, "ID must be 0 or greater."
     except ValueError:
         return None, "Please enter a valid integer ID."
 
 
-
 def validate_calculation_type(input_type):
     """
-    Validates if the calculation type input is either 0 (arithmetic) or 1 (weighted).
+    Validates if the calculation type is either 0 (arithmetic) or 1 (weighted).
 
     Args:
         input_type (str): The type input as a string.
 
     Returns:
-        tuple: (input_type, None) if valid, (None, error_message) if invalid.
+        tuple: (str, None) if valid, (None, str) if invalid.
     """
     if input_type in ["0", "1"]:
         return input_type, None
     return None, "Please enter 0 for arithmetic or 1 for weighted."
 
 
-
 def validate_weights(input_str):
     """
-    Validates if the input consists of numeric weights whose sum equals 10.
+    Validates numeric weights from a space-separated string.
+
+    Checks if:
+    1. The string is not empty.
+    2. All inputs are numeric and > 0.
+    3. The sum of all weights equals 10.
 
     Args:
         input_str (str): The weights input as a space-separated string.
 
     Returns:
-        tuple: (weights_list, None) if valid, (None, error_message) if invalid.
+        tuple: (list[float], None) if valid, (None, str) if invalid.
     """
     try:
         weights = list(map(float, input_str.strip().split()))
@@ -78,22 +88,20 @@ def validate_weights(input_str):
         return None, "All weights must be numeric."
 
 
-
 def validate_yes_no(input_value):
     """
     Validates a yes/no input. Accepts only 'y' or 'n'.
 
     Args:
-        input_value (str): User input.
+        input_value (str): The user input.
 
     Returns:
-        tuple: (input_value, None) if valid, (None, error message) if invalid.
+        tuple: (str, None) if valid ('y' or 'n'), (None, str) if invalid.
     """
     input_value = input_value.strip().lower()
     if input_value in ["y", "n"]:
         return input_value, None
     return None, "Please enter only 'y' for yes or 'n' for no."
-
 
 
 def validate_grade(input_grade):
@@ -104,7 +112,7 @@ def validate_grade(input_grade):
         input_grade (str): The grade input as a string.
 
     Returns:
-        tuple: (value, None) if valid, (None, error_message) if invalid.
+        tuple: (float, None) if valid, (None, str) if invalid.
     """
     try:
         value = float(input_grade)
@@ -115,7 +123,6 @@ def validate_grade(input_grade):
         return None, "Please enter a valid number between 0 and 10."
 
 
-
 def validate_names(name):
     """
     Validates if the name contains only letters and spaces.
@@ -124,9 +131,10 @@ def validate_names(name):
         name (str): The student's name input.
 
     Returns:
-        tuple: (cleaned_name, None) if valid, (None, error_message) if invalid.
+        tuple: (str, None) if valid (cleaned name), (None, str) if invalid.
     """
     cleaned = name.strip().capitalize()
+    # Check if the name (with spaces removed) contains only letters
     if cleaned.replace(" ", "").isalpha():
         return cleaned, None
     return None, "Name must contain only letters and spaces."
