@@ -91,8 +91,8 @@ ask_to_retry()
 
 <p align="center">
   <img 
-    src="https://github.com/user-attachments/assets/9c28c201-3ef7-4189-a0e7-51a4b01b4254" 
-    alt="ChatGPT Image May 11, 2025, 01_11_27 AM"
+    src="./src/media/img/use_case_diagram.jpg" 
+    alt="use case diagram"
     width="500"
     style="border: 2px solid #ccc; border-radius: 10px;"
   >
