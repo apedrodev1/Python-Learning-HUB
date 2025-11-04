@@ -101,7 +101,6 @@ The program retrieves all students (new and old) from the DB and displays them.
 4. **Optional Correction**
 (CRUD): You can edit the name, grades, weights, or delete any student from the database.
 
-
 5. **Optional Export**
  You can export the complete list to JSON or XML.
 
