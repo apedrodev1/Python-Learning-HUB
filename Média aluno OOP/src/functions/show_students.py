@@ -1,11 +1,25 @@
+"""
+Handles the console output for displaying the list of students.
+
+This module is responsible for printing a formatted, table-like report
+of all students to the console.
+"""
+
 from ..utils.formatters import format_student_row_for_show
 
 def display_students(student_list):
     """
     Displays the processed data of students in a readable table format.
     
+    If the list is empty, it prints a "No students found" message.
+    Otherwise, it prints a formatted header and then iterates over
+    the list, printing one formatted row for each student.
+
     Args:
-        student_list (list): A list of student objects to be displayed.
+        student_list (list[Student]): A list of Student objects to be displayed.
+        
+    Returns:
+        None
     """
     print("\n📊 Students Report:")
 
@@ -13,7 +27,7 @@ def display_students(student_list):
         print('❌ No students found.')
         return
 
-    # Agora seguro: só acessa o primeiro elemento após checar se lista não está vazia
+    # Safe to access the first element now, as we've checked if the list is empty.
     type_label = "Weighted" if student_list[0].is_weighted else "Arithmetic"
     print(f"\n🧮 Average Calculation Type: {type_label}")
 
