@@ -7,134 +7,116 @@ and return a (value, None) tuple on success, or a (None, error_message)
 tuple on failure.
 """
 
-def validate_quantity(input_quantity):
-    """
-    Validates if the input is a positive integer.
+# --- Base Functions (Internal) ---
 
-    Args:
-        input_quantity (str): The quantity input as a string.
-
-    Returns:
-        tuple: (int, None) if valid, (None, str) if invalid.
-    """
+def _validate_integer_range(value_str, min_val=None, max_val=None, error_msg="Invalid input. Please enter a whole number."):
+    """Base function to validate integers in an optional range."""
     try:
-        value = int(input_quantity)
-        if value > 0:
-            return value, None
-        return None, "Number must be greater than zero."
+        value = int(value_str)
+        if min_val is not None and value < min_val:
+            # Use the specific error message or a generic one
+            return None, error_msg or f"Value must be at least {min_val}."
+        if max_val is not None and value > max_val:
+            # Use the specific error message or a generic one
+            return None, error_msg or f"Value must be no more than {max_val}."
+        return value, None # Success
     except ValueError:
-        return None, "Please enter a valid positive integer."
+        # Use the specific error message or a generic one
+        return None, error_msg or "Invalid input. Please enter a whole number."
 
+def _validate_float_range(value_str, min_val=None, max_val=None, error_msg="Invalid input. Please enter a number."):
+    """Base function to validate floats in an optional range."""
+    try:
+        value = float(value_str)
+        if min_val is not None and value < min_val:
+            # Use the specific error message or a generic one
+            return None, error_msg or f"Value must be at least {min_val}."
+        if max_val is not None and value > max_val:
+            # Use the specific error message or a generic one
+            return None, error_msg or f"Value must be no more than {max_val}."
+        return value, None
+    except ValueError:
+        # Use the specific error message or a generic one
+        return None, error_msg or "Invalid input. Please enter a number."
+
+def _validate_allowed_options(value_str, options, error_msg="Invalid option."):
+    """Base function to validate if the input is in a list of options."""
+    cleaned_val = value_str.strip().lower()
+    if cleaned_val in options:
+        return cleaned_val, None
+    return None, error_msg
+
+# --- Number Validations (Specific) ---
+
+def validate_quantity(input_quantity):
+    """Validates if the input is a positive integer (>= 1)."""
+    return _validate_integer_range(
+        input_quantity,
+        min_val=1,
+        error_msg="Number must be greater than zero."
+    )
+
+def validate_quantity_min_2(value_str):
+    """Validates if the input is an integer greater than or equal to 2."""
+    return _validate_integer_range(
+        value_str,
+        min_val=2,
+        error_msg="The number of grades must be at least 2."
+    )
 
 def validate_id(input_id):
-    """
-    Validates if the input is a non-negative integer (ID).
+    """Validates if the input is a non-negative integer (ID >= 0)."""
+    return _validate_integer_range(
+        input_id,
+        min_val=0,
+        error_msg="ID must be 0 or greater."
+    )
 
-    Args:
-        input_id (str): The student's ID input as a string.
-
-    Returns:
-        tuple: (int, None) if valid, (None, str) if invalid.
-    """
-    try:
-        value = int(input_id)
-        if value >= 0:
-            return value, None
-        return None, "ID must be 0 or greater."
-    except ValueError:
-        return None, "Please enter a valid integer ID."
-
-
-def validate_calculation_type(input_type):
-    """
-    Validates if the calculation type is either 0 (arithmetic) or 1 (weighted).
-
-    Args:
-        input_type (str): The type input as a string.
-
-    Returns:
-        tuple: (str, None) if valid, (None, str) if invalid.
-    """
-    if input_type in ["0", "1"]:
-        return input_type, None
-    return None, "Please enter 0 for arithmetic or 1 for weighted."
-
+def validate_grade(input_grade):
+    """Validates if the grade is a number between 0 and 10."""
+    return _validate_float_range(
+        input_grade,
+        min_val=0.0,
+        max_val=10.0,
+        error_msg="Please enter a number between 0 and 10."
+    )
 
 def validate_weights(input_str):
-    """
-    Validates numeric weights from a space-separated string.
-
-    Checks if:
-    1. The string is not empty.
-    2. All inputs are numeric and > 0.
-    3. The sum of all weights equals 10.
-
-    Args:
-        input_str (str): The weights input as a space-separated string.
-
-    Returns:
-        tuple: (list[float], None) if valid, (None, str) if invalid.
-    """
+    """Validates a list of weights (sum must be 10)."""
     try:
         weights = list(map(float, input_str.strip().split()))
         if not weights:
             return None, "Weights cannot be empty."
         if any(w <= 0 for w in weights):
             return None, "All weights must be greater than zero."
-        if sum(weights) != 10:
+        # Use round() to avoid float precision issues
+        if round(sum(weights), 5) != 10:
             return None, "The total weight must equal 10."
         return weights, None
     except ValueError:
         return None, "All weights must be numeric."
 
-
-def validate_yes_no(input_value):
-    """
-    Validates a yes/no input. Accepts only 'y' or 'n'.
-
-    Args:
-        input_value (str): The user input.
-
-    Returns:
-        tuple: (str, None) if valid ('y' or 'n'), (None, str) if invalid.
-    """
-    input_value = input_value.strip().lower()
-    if input_value in ["y", "n"]:
-        return input_value, None
-    return None, "Please enter only 'y' for yes or 'n' for no."
-
-
-def validate_grade(input_grade):
-    """
-    Validates if the grade is a number between 0 and 10.
-
-    Args:
-        input_grade (str): The grade input as a string.
-
-    Returns:
-        tuple: (float, None) if valid, (None, str) if invalid.
-    """
-    try:
-        value = float(input_grade)
-        if 0 <= value <= 10:
-            return value, None
-        return None, "Please enter a number between 0 and 10."
-    except ValueError:
-        return None, "Please enter a valid number between 0 and 10."
-
+# --- Text/Option Validations ---
 
 def validate_names(name):
-    """
-    Validates if the name contains only letters and spaces.
-
-    Args:
-        name (str): The student's name input.
-
-    Returns:
-        tuple: (str, None) if valid (cleaned name), (None, str) if invalid.
-    """
+    """Validates if the name contains only letters and spaces."""
     cleaned = name.strip().capitalize()
-    # Check if the name (with spaces removed) contains only letters
-    if cleaned.replace(" ", "").isalpha():
+    if cleaned and cleaned.replace(" ", "").isalpha():
         return cleaned, None
     return None, "Name must contain only letters and spaces."
+
+def validate_yes_no(input_value):
+    """Validates a 'y' or 'n' input."""
+    return _validate_allowed_options(
+        input_value,
+        options=["y", "n"],
+        error_msg="Please enter only 'y' for yes or 'n' for no."
+    )
+
+def validate_calculation_type(input_type):
+    """Validates the calculation type (0, 1, or 2)."""
+    return _validate_allowed_options(
+        input_type,
+        options=["0", "1", "2"], # Already including the future median
+        error_msg="Please enter 0 (Arithmetic), 1 (Weighted), or 2 (Median)."
+    )

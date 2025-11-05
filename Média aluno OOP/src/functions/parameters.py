@@ -10,7 +10,8 @@ from ..utils.validations import  (
     validate_quantity,
     validate_calculation_type,
     validate_weights,
-    validate_grade
+    validate_grade,
+    validate_quantity_min_2
 )
 
 def get_main_parameters():
@@ -68,7 +69,7 @@ def get_main_parameters():
         # If arithmetic, ask for the number of grades per student
         while True:
             marks_input = input("How many grades will each student have? ")
-            number_of_marks, error = validate_quantity(marks_input)
+            number_of_marks, error = validate_quantity_min_2(marks_input)
             if error:
                 print(f"❌ {error}")
             else:
