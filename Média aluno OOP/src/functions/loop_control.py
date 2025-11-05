@@ -6,7 +6,7 @@ and managing the "run again" prompt at the end of the main loop.
 """
 
 import os
-from ..functions.validations import validate_yes_no
+from ..utils.validations import validate_yes_no
 
 def clear_screen():
     """
