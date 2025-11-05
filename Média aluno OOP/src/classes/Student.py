@@ -5,7 +5,7 @@ This module defines the Student data structure, including its
 self-validating properties and calculated attributes.
 """
 
-from src.functions.validations import validate_grade, validate_names, validate_weights
+from src.utils.validations import validate_grade, validate_names, validate_weights
 
 class Student:
    
