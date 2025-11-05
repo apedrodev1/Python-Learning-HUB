@@ -182,32 +182,43 @@ The loop restarts (without losing any data).
 ```
 Média aluno OOP/
 │
-├── index.py
+├── index.py                # Main entry point (Orchestrator)
 ├── README.md
 │
 ├── src/
+│   ├── bd/                 
+│   │   ├── banco_de_dados.db   # Database file (created automatically)
+│   │   ├── queries.py          # Script containing all SQL constants needed
+│   │   └── repository.py       # StudentRepository class (CRUD)
+│   │
 │   ├── classes/
-│   │   └── Student.py
+│   │   └── Student.py      # OOP core ("Encapsulated" Student class)
 │   │
 │   ├── functions/
 │   │   ├── data/
-│   │   │   ├── edit_student.py
-│   │   │   └── update_student_data.py
+│   │   │   ├── manage_students.py  # Manager (SELECT by ID)
+│   │   │   └── edit_student_form.py# Form (UPDATE/DELETE a single student)
 │   │   │
 │   │   ├── export/
-│   │   │   ├── export_wrapper.py
+│   │   │   ├── export_wrapper.py   # Menu (JSON or XML?)
 │   │   │   ├── json_exporter.py
 │   │   │   └── xml_exporter.py
 │   │   │
-│   │   ├── loop_control.py
-│   │   ├── main_function.py
-│   │   ├── parameters.py
-│   │   ├── show_students.py
-│   │   └── validations.py
+│   │   ├── loop_control.py   # Functions 'ask_to_retry' and 'clear_screen'
+│   │   ├── main_function.py  # Form (CREATE - adds new students)
+│   │   ├── parameters.py     # Collects initial parameters
+│   │   ├── show_students.py  # Prints the formatted report
+│   │   └── 
+│   └── media                 # Images used in README.md
+│   │      └── img
+│   │           └── dev.pic.jpg
+│   │           └── use_case_diagram.jpg
 │   │
 │   └── utils/
-│       ├── colors.py
-│       └── formatters.py
+│       ├── colors.py         # ANSI color constants
+│       └── formatters.py     # Pretty-print helper functions
+│       └── validations.py    # Input validation utility functions
+
 ```
 </br>
 
