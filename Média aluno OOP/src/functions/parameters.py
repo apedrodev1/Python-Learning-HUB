@@ -6,7 +6,7 @@ the initial batch of settings (like student quantity, average type,
 and passing grade) before the main processing begins.
 """
 
-from ..functions.validations import (
+from ..utils.validations import  (
     validate_quantity,
     validate_calculation_type,
     validate_weights,
