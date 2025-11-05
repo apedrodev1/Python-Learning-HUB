@@ -7,7 +7,7 @@ via the repository.
 """
 
 from src.classes.Student import Student
-from ..functions.validations import (
+from ..utils.validations import (
     validate_grade,
     validate_names, 
     validate_quantity
