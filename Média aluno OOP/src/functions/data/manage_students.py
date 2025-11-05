@@ -9,7 +9,7 @@ list of students, prompts for an ID, and then calls the
 from .edit_student_form import show_edit_form
 from ..loop_control import clear_screen
 from .. .utils.formatters import format_student_line_for_edit
-from ..validations import (
+from .. .utils.validations import (
     validate_id,
     validate_yes_no
 )
