@@ -8,6 +8,7 @@ list of students, prompts for an ID, and then calls the
 
 from .edit_student_form import show_edit_form
 from ..loop_control import clear_screen
+from .. .utils.input_handler import get_valid_input
 from .. .utils.formatters import format_student_line_for_edit
 from .. .utils.validations import (
     validate_id,
@@ -41,13 +42,11 @@ def edit_student_edits(student_list, repository):
         print("❌ No students available to edit.")
         return False
 
-    while True:
-        edit_any_input = input('\n ✏️  Would you like to edit any student? (y/n): ')
-        edit_any, error = validate_yes_no(edit_any_input)
-        if error:
-            print(f"❌ {error}")
-        else:
-            break
+    # Loop 1: Substituído por get_valid_input
+    edit_any, _ = get_valid_input(
+        '\n ✏️  Would you like to edit any student? (y/n): ',
+        validate_yes_no
+    )
 
     if edit_any == 'n':
         return False
@@ -72,14 +71,11 @@ def edit_student_edits(student_list, repository):
 
         print("─" * 100)
 
-        # Loop to get a valid student ID from the user
-        while True:
-            input_raw = input('\n🔍  Please type the student ID to edit: ')
-            input_id, error = validate_id(input_raw)
-            if error:
-                print(f'❌ {error}')
-            else:
-                break
+         # Loop to get a valid student ID from the user
+        input_id, _ = get_valid_input(
+            '\n🔍  Please type the student ID to edit: ',
+            validate_id
+        )
 
         # Find the student in the list
         found = False
@@ -99,16 +95,14 @@ def edit_student_edits(student_list, repository):
         if not found:
             print("❌ No student found with that ID.")
 
-        # Loop to ask the user if they want to edit another student
-        while True:
-            another_input = input('\n✏️  Would youD like to edit another student? (y/n): ')
-            another, error = validate_yes_no(another_input)
-            clear_screen()
-            if error:
-                print(f"❌ {error}")
-            else:
-                break
-
+       # Loop to ask the user if they want to edit another student
+        another, _ = get_valid_input(
+            '\n✏️  Would you like to edit another student? (y/n): ',
+            validate_yes_no
+        )
+        
+        clear_screen()
+        
         if another == 'n':
             break # Exit the main editing loop
 
