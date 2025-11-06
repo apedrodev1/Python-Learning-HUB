@@ -67,6 +67,9 @@ def main():
             
             # SELECT ALL students from the database
             students_list = repo.get_all_students() 
+
+            # Sort list alphabetically by name
+            students_list.sort(key=lambda s: s.name)
             
             # Show the complete, updated student list
             display_students(students_list) 

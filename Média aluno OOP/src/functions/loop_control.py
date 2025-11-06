@@ -6,6 +6,7 @@ and managing the "run again" prompt at the end of the main loop.
 """
 
 import os
+from ..utils.input_handler import get_valid_input
 from ..utils.validations import validate_yes_no
 
 def clear_screen():
@@ -29,16 +30,15 @@ def ask_to_retry():
         bool: True if the user wants to retry ('y'),
               False if the user wants to quit ('n').
     """
-    while True:
-        retry_input = input("\n🔁 Do you want to run the program again? (y/n): ")
-        retry, error = validate_yes_no(retry_input)
         
-        if error:
-            print(f"❌ {error}")
-        elif retry == 'y':
-            clear_screen()
-            return True
-        elif retry == 'n':
-            # \n (newline) added for cleaner exit formatting
-            print("\n👋 Program finished. See you next time!")
-            return False
+    retry, _ = get_valid_input( # This fuction does a While loop
+        "\n🔁 Do you want to run the program again? (y/n): ",
+        validate_yes_no  
+    )
+    
+    if retry == 'y':
+        clear_screen()
+        return True
+    elif retry == 'n':
+        print("\n👋 Program finished. See you next time!")
+        return False
