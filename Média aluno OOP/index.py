@@ -14,13 +14,13 @@ from src.functions.data.manage_students import edit_student_edits
 from src.functions.export.export_wrapper import export_students 
 from src.functions.loop_control import ask_to_retry
 from src.functions.show_students import display_students 
-from src.bd.repository import StudentRepository 
+from src.db.repository import StudentRepository 
 
 # --- Database Path Setup ---
 # Get the absolute path of the directory where this script is located
 BASE_DIR = os.path.dirname(os.path.abspath(__file__)) 
 # Create a reliable path to the database file
-DB_PATH = os.path.join(BASE_DIR, 'src', 'bd', 'banco_de_dados.db') 
+DB_PATH = os.path.join(BASE_DIR, 'src', 'db', 'db_files', 'banco_de_dados.db') 
 # ---------------------------------------------------------
 
 print("🎓 Welcome to the Grade Calculation System 🎓\n")
