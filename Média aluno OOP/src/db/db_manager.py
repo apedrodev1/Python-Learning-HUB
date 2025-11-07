@@ -43,7 +43,6 @@ def _prompt_load_or_create(db_files: list) -> (str | None, bool):
         tuple (str | None, bool): (db_path, is_new_db)
         Returns (None, False) if the user chooses to exit.
     """
-    print("\n--- Existing Classrooms Found ---")
     
     # Create menu options
     options = {}
@@ -115,7 +114,7 @@ def setup_repository() -> (StudentRepository | None, bool):
     # 3. Decide which flow to follow
     if not db_files:
         # Scenario 1: Empty folder (Flow 1)
-        print("🔍 No existing classrooms found.")
+        print("🔍 No existing classrooms yet.")
         choice, _ = get_valid_input(
             "Would you like to create a new one? (y/n): ",
             validate_yes_no
@@ -127,8 +126,22 @@ def setup_repository() -> (StudentRepository | None, bool):
         else:
             return None, False # User decided to quit
     else:
-        # Scenario 2: Folder with files (Flow 2)
-        db_path, is_new_db = _prompt_load_or_create(db_files)
+        # Scenario 2: Folder with files (Plano B flow)
+        load_choice, _ = get_valid_input(
+            "Would you like to (L)oad an existing classroom or create a (N)ew one? (L/N): ",
+            # Simple inline validator for 'l' or 'n'
+            lambda s: (s.strip().lower(), None) if s.strip().lower() in ['l', 'n'] 
+                      else (None, "❌ Invalid choice. Please enter 'L' or 'N'.")
+        )
+        
+        if load_choice == 'l':
+            # User wants to load, NOW show the detailed list
+            db_path, is_new_db = _prompt_load_or_create(db_files)
+        
+        elif load_choice == 'n':
+            # User wants to create new, skip the list
+            db_path = _prompt_create_new_db()
+            is_new_db = True
 
     # 4. If the user didn't exit (S) or quit (n), create the repository
     if db_path:
