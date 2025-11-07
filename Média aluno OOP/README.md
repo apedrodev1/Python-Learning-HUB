@@ -182,42 +182,49 @@ The loop restarts (without losing any data).
 ```
 Média aluno OOP/
 │
-├── index.py                # Main entry point (Orchestrator)
+├── index.py                              # Main entry point (Orchestrator)
 ├── README.md
 │
 ├── src/
-│   ├── bd/                 
-│   │   ├── banco_de_dados.db   # Database file (created automatically)
-│   │   ├── queries.py          # Script containing all SQL constants needed
-│   │   └── repository.py       # StudentRepository class (CRUD)
-│   │
 │   ├── classes/
-│   │   └── Student.py      # OOP core ("Encapsulated" Student class)
+│   │        ├── Classroom.py             # Main branch (OOP core)
+│   │        └── Student.py               # Leaves from Classroom.py ("Encapsulated" Student class) 
+│   │
+│   ├── db/
+│   │   ├── db_files/                     # Database folder
+│   │   ├── db_manager.py                 # Lógica de setup (load/create .db)
+│   │   ├── queries.py                    # Script containing all SQL constants needed
+│   │   └── repository.py                 # StudentRepository class (CRUD)
+│   │ 
 │   │
 │   ├── functions/
+│   │   ├── core/              
+│   │   │   ├── loop_control.py           # Functions 'ask_to_retry' and 'clear_screen'
+│   │   │   ├── main_function.py          # Form (CREATE - adds new students)
+│   │   │   ├── parameters.py             # Collects initial parameters
+│   │   │   ├── show_students.py          # Prints the formatted report
+│   │   │
 │   │   ├── data/
-│   │   │   ├── manage_students.py  # Manager (SELECT by ID)
-│   │   │   └── edit_student_form.py# Form (UPDATE/DELETE a single student)
+│   │   │   ├── manage_students.py        # Manager (SELECT by ID)
+│   │   │   └── edit_student_form.py      # Form (UPDATE/DELETE a single student)
+│   │   │   
 │   │   │
-│   │   ├── export/
-│   │   │   ├── export_wrapper.py   # Menu (JSON or XML?)
-│   │   │   ├── json_exporter.py
-│   │   │   └── xml_exporter.py
-│   │   │
-│   │   ├── loop_control.py   # Functions 'ask_to_retry' and 'clear_screen'
-│   │   ├── main_function.py  # Form (CREATE - adds new students)
-│   │   ├── parameters.py     # Collects initial parameters
-│   │   ├── show_students.py  # Prints the formatted report
-│   │   └── 
-│   └── media                 # Images used in README.md
-│   │      └── img
-│   │           └── dev.pic.jpg
-│   │           └── use_case_diagram.jpg
+│   │   └── export/                       
+│   │       ├── export_wrapper.py         # Menu (JSON or XML?)
+│   │       ├── json_exporter.py
+│   │       └── xml_exporter.py
 │   │
-│   └── utils/
-│       ├── colors.py         # ANSI color constants
-│       └── formatters.py     # Pretty-print helper functions
-│       └── validations.py    # Input validation utility functions
+│   ├── media/                            # Images used in README.md
+│   │   └── img/
+│   │       ├── apedrodev1-pic.jpg
+│   │       └── use_case_diagram.jpg
+│   │
+│   └── utils/                
+│       ├── colors.py                     # ANSI color constants
+│       |── formatters.py                 # Pretty-print helper functions                  
+│       ├── input_handler.py              # while: True loop template
+│       └── validations.py                # Input validation utility functions
+
 
 ```
 </br>
