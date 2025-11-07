@@ -7,21 +7,14 @@ of the program, calling functions for parameter setup, student
 processing, editing, and exporting.
 """
 
-import os
+from src.db.db_manager import setup_repository
 from src.functions.parameters import get_main_parameters
 from src.functions.main_function import process_students
 from src.functions.data.manage_students import edit_student_edits
 from src.functions.export.export_wrapper import export_students 
 from src.functions.loop_control import ask_to_retry
 from src.functions.show_students import display_students 
-from src.db.repository import StudentRepository 
 
-# --- Database Path Setup ---
-# Get the absolute path of the directory where this script is located
-BASE_DIR = os.path.dirname(os.path.abspath(__file__)) 
-# Create a reliable path to the database file
-DB_PATH = os.path.join(BASE_DIR, 'src', 'db', 'db_files', 'banco_de_dados.db') 
-# ---------------------------------------------------------
 
 print("🎓 Welcome to the Grade Calculation System 🎓\n")
 
@@ -37,24 +30,31 @@ def main():
     4.  Ensuring the database connection is closed properly on exit.
     """
     
+    repo = None
+    is_new_db = False
+
     try:
-        # Try to create the repository instance.
-        # This also creates the tables if they don't exist.
-        repo = StudentRepository(DB_PATH) 
+        # Initializing the repository
+        repo, is_new_db = setup_repository()
+    
+        # Verifies if the user has left
+        if repo is None:
+            print("\n👋 Program finished.")
+            return #Finish main()
+        
     except Exception as e:
         print(f"❌ Critical error! to connect to the database: {e}")
         print("Finalizing the program...")
-        return # finish the program if DB connection fails
-    # --------------------------------------------------
+        return # Finish the program if setup_repository fail
 
-    # This 'try...finally' block ensures that the database connection
-    # is *always* closed when the program exits, even if an error occurs.
+
+
+    # --- Main Loop of the Program ---
     try:
-        # --- Main Loop of the Program ---
-        while True:
+        if is_new_db:
             # Get the main parameters from the user
             students_quantity, way_to_calculate, passing_grade, weights, number_of_marks = get_main_parameters()
-
+          
             # Process and add new students to the database
             process_students(
                 students_quantity,
@@ -64,6 +64,8 @@ def main():
                 number_of_marks,
                 repository=repo 
             )
+
+        while True:
             
             # SELECT ALL students from the database
             students_list = repo.get_all_students() 
@@ -86,7 +88,6 @@ def main():
     
     finally:
         # --- Close DB conection ---
-        print("\n👋 Closing database connection...")
         repo.close()
     # ---------------------------------------
 
