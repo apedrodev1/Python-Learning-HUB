@@ -7,7 +7,7 @@ list of students, prompts for an ID, and then calls the
 """
 
 from .edit_student_form import show_edit_form
-from ..loop_control import clear_screen
+from ..core.loop_control import clear_screen
 from .. .utils.input_handler import get_valid_input
 from .. .utils.formatters import format_student_line_for_edit
 from .. .utils.validations import (
