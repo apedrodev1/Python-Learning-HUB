@@ -8,12 +8,12 @@ processing, editing, and exporting.
 """
 
 from src.db.db_manager import setup_repository
-from src.functions.parameters import get_main_parameters
-from src.functions.main_function import process_students
+from src.functions.core.parameters import get_main_parameters
+from src.functions.core.main_function import process_students
 from src.functions.data.manage_students import edit_student_edits
 from src.functions.export.export_wrapper import export_students 
-from src.functions.loop_control import ask_to_retry
-from src.functions.show_students import display_students 
+from src.functions.core.loop_control import ask_to_retry
+from src.functions.core.show_students import display_students 
 
 
 print("🎓 Welcome to the Grade Calculation System 🎓\n")
