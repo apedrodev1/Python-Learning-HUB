@@ -10,7 +10,7 @@ processing, editing, and exporting.
 from src.db.db_manager import setup_repository
 from src.functions.core.parameters import get_main_parameters
 from src.functions.core.main_function import process_students
-from src.functions.data.manage_students import edit_student_edits
+from functions.data.student_selector import prompt_for_selection
 from src.functions.export.export_wrapper import export_students 
 from src.functions.core.loop_control import ask_to_retry
 from src.functions.core.show_students import display_students 
@@ -48,6 +48,12 @@ def main():
         return # Finish the program if setup_repository fail
 
 
+    # SELECT ALL students from the database
+    students_list = repo.get_all_students() 
+
+    # Sort list alphabetically by name
+    students_list.sort(key=lambda s: s.name)
+
 
     # --- Main Loop of the Program ---
     try:
@@ -66,18 +72,12 @@ def main():
             )
 
         while True:
-            
-            # SELECT ALL students from the database
-            students_list = repo.get_all_students() 
-
-            # Sort list alphabetically by name
-            students_list.sort(key=lambda s: s.name)
-            
+                 
             # Show the complete, updated student list
             display_students(students_list) 
 
             # Run the edit/delete/update workflow
-            edit_student_edits(students_list, repo) 
+            prompt_for_selection(students_list, repo) 
             
             # Ask if the User wants to export the data
             export_students(students_list)
