@@ -6,7 +6,7 @@ to modify the attributes of a single, selected Student object and
 persist those changes to the database via the repository.
 """
 
-def show_edit_form(student, repository):
+def show_edit_form(student, repository, students_list):
     """
     Displays an interactive menu to edit a single student's data.
 
@@ -36,9 +36,10 @@ def show_edit_form(student, repository):
 
         if choice == "1":
             try:
-                # 1. Update the object in memory (via setter)
+                # 1. Update alphabetically the object in memory (via setter)
                 student.name = input("Enter new name: ") 
-                 #students_list.sort(key=lambda s: s.name) usei a mesma linha  de código do index, porém aqui não importamos students_list, esse é o caminho? importar?
+                students_list.sort(key=lambda s: s.name) 
+                
                 # 2. Persist change to the database
                 repository.update_student(student)
 
