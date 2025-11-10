@@ -10,7 +10,7 @@ processing, editing, and exporting.
 from src.db.db_manager import setup_repository
 from src.functions.core.parameters import get_main_parameters
 from src.functions.core.main_function import process_students
-from functions.data.student_selector import prompt_for_selection
+from src.functions.data.student_selector import prompt_for_selection
 from src.functions.export.export_wrapper import export_students 
 from src.functions.core.loop_control import ask_to_retry
 from src.functions.core.show_students import display_students 
