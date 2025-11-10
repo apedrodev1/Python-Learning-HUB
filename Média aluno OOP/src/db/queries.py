@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS grades (
 # This table will store classroom-wide settings like
 # calc_type, passing_grade, and weights_marks as key-value pairs.
 CREATE_TABLE_CLASSROOM_CONFIG = """
-CREATE TABLE IF NOT EXISTS class_config (
+CREATE TABLE IF NOT EXISTS classroom_config (
     key TEXT PRIMARY KEY,
     value TEXT
 );
