@@ -7,7 +7,7 @@ of the program, calling functions for parameter setup, student
 processing, editing, and exporting.
 """
  
-from src.db.db_manager import DatabaseManager
+from src.db.db_manager import setup_repository
 from src.functions.core.parameters import get_main_parameters
 from src.functions.core.main_function import process_students
 from src.functions.data.student_selector import prompt_for_selection
