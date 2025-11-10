@@ -49,7 +49,7 @@ def get_main_parameters():
 
     # Validate the type of average calculation
     while True:
-        calc_type_input = input('Would you like to use arithmetic or weighted average? (Enter 0 for arithmetic and 1 for weighted): ')
+        calc_type_input = input('Would you like to use arithmetic or weighted average? (Enter 0 for arithmetic mean, 1 for weighted mean and 2 for median): ')
         way_to_calculate, error = validate_calculation_type(calc_type_input)
         if error:
             print(f"❌ {error}")
