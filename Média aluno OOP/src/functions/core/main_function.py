@@ -24,7 +24,7 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
 
     Args:
         students_quantity (int): The total number of new students to process.
-        way_to_calculate (str): The calculation method ("0" or "1").
+        way_to_calculate (str): The calculation method ("0", "1", or "2").
         passing_grade (float): The minimum grade required to pass.
         weights (list): A list of weights (if 'is_weighted' is True).
         number_of_marks (int): The number of grades per student (if arithmetic).
@@ -34,6 +34,8 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
         None
     """
 
+    # This local variable is still useful for determining
+    # the number of marks to collect.
     is_weighted = way_to_calculate == "1"
 
     for i in range(students_quantity): 
@@ -52,6 +54,7 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
         if is_weighted:
             num_marks = len(weights)
         else:
+            # This works for both Arithmetic ('0') and Median ('2')
             num_marks = number_of_marks
 
         # Collect grades
@@ -68,12 +71,14 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
         
         # Create the Student object and save it to the database
         try:
+            # --- THIS IS THE UPDATED CONSTRUCTOR CALL ---
             student = Student(
                 student_id=None, # ID will be set by the DB
                 name=name, 
                 passing_grade=passing_grade, 
-                weights_marks=weights if is_weighted else [], 
-                is_weighted=is_weighted
+                calc_type=way_to_calculate, # We now pass the calc_type
+                weights_marks=weights if is_weighted else [] 
+                # 'is_weighted' argument is removed
             )
             
             student.marks = marks_input_list 
