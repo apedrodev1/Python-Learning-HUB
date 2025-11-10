@@ -117,6 +117,6 @@ def validate_calculation_type(input_type):
     """Validates the calculation type (0, 1, or 2)."""
     return _validate_allowed_options(
         input_type,
-        options=["0", "1", "2"], # Already including the future median
+        options=["0", "1", "2"], # 
         error_msg="Please enter 0 (Arithmetic), 1 (Weighted), or 2 (Median)."
     )
