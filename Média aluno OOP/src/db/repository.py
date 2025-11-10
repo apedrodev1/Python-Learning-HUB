@@ -9,13 +9,13 @@ It is the only part of the application that should directly execute SQL.
 import sqlite3
 import json
 from . import queries
-from .db_manager import DatabaseManager  # Import the context manager
+from src.utils.db_context_manager import DatabaseManager
 from src.classes.Student import Student
 
 
 class Repository:
     """
-    Manages all database operations for Student and Config objects.
+    Manages all database operations for Student and Classroom objects.
 
     This class handles the connection, cursor management, and translation
     between Student objects and the SQL database tables using the
@@ -48,7 +48,7 @@ class Repository:
                 conn.execute(queries.CREATE_TABLE_STUDENTS)
                 conn.execute(queries.CREATE_TABLE_GRADES)
                 # Ensure the new config table is created
-                conn.execute(queries.CREATE_TABLE_CLASS_CONFIG)
+                conn.execute(queries.CREATE_TABLE_CLASSROOM_CONFIG)
         except sqlite3.Error as e:
             print(f"Error creating tables: {e}")
 
@@ -240,5 +240,3 @@ class Repository:
 
         except sqlite3.Error as e:
             print(f"Error deleting student (ID: {student_id}): {e}")
-
-    # The 'close' method is no longer needed as the DatabaseManager handles it.
