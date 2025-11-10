@@ -1,7 +1,7 @@
 import os
 from ..utils.input_handler import get_valid_input
 from ..utils.validations import validate_yes_no
-from ..db.repository import StudentRepository
+from ..db.repository import Repository
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DB_FILES_DIR = os.path.join(BASE_DIR, 'src', 'db', 'db_files')
@@ -85,7 +85,7 @@ def _prompt_load_or_create(db_files: list) -> (str | None, bool):
     return db_path, False # Loading existing
 
 
-def setup_repository() -> (StudentRepository | None, bool):
+def setup_repository() -> (Repository | None, bool):
     """
     Orchestrates the database (classroom) setup.
     
@@ -93,7 +93,7 @@ def setup_repository() -> (StudentRepository | None, bool):
     load an existing classroom DB or create a new one.
     
     Returns:
-        tuple (StudentRepository | None, bool):
+        tuple (Repository | None, bool):
             (repository_instance, is_new_db)
             - 'repository_instance' is None if the user quits.
             - 'is_new_db' is True if a new DB is being created.
@@ -146,7 +146,7 @@ def setup_repository() -> (StudentRepository | None, bool):
     # 4. If the user didn't exit (S) or quit (n), create the repository
     if db_path:
         try:
-            repo = StudentRepository(db_path)
+            repo = Repository(db_path)
             return repo, is_new_db
         except Exception as e:
             print(f"❌ Critical error initializing repository: {e}")
