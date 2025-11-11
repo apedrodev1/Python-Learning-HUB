@@ -9,7 +9,7 @@ It is the only part of the application that should directly execute SQL.
 import sqlite3
 import json
 from . import queries
-from src.utils.db_context_manager import DatabaseManager
+from src.utils.db_connection import DatabaseManager
 from src.classes.Student import Student
 
 
