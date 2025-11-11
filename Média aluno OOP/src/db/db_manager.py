@@ -1,7 +1,7 @@
 import os
 from ..utils.input_handler import get_valid_input
 from ..utils.validations import validate_yes_no
-from ..db.repository import Repository
+from .repository import Repository
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DB_FILES_DIR = os.path.join(BASE_DIR, 'src', 'db', 'db_files')
