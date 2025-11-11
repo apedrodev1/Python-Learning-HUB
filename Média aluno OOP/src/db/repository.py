@@ -62,7 +62,12 @@ class Repository:
             key (str): The name of the configuration key (e.g., "calc_type").
 
         Returns:
-            str or None: The stored value as a string, or None if not found.
+            str or None: The stored value as a string, or None if not found. 
+            
+            Possible keys:
+            - 0 for Arithmetic (also the default option),
+            - 1 for Weighted,
+            - 2 for Median
         """
         try:
             with self.db_manager as conn:
