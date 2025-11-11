@@ -9,7 +9,7 @@ It is the only part of the application that should directly execute SQL.
 import sqlite3
 import json
 from . import queries
-from ..utils.db_context_manager import DatabaseManager 
+from src.utils.db_connection import DatabaseManager
 from src.classes.Student import Student
 
 
@@ -62,7 +62,12 @@ class Repository:
             key (str): The name of the configuration key (e.g., "calc_type").
 
         Returns:
-            str or None: The stored value as a string, or None if not found.
+            str or None: The stored value as a string, or None if not found. 
+            
+            Possible keys:
+            - 0 for Arithmetic (also the default option),
+            - 1 for Weighted,
+            - 2 for Median
         """
         try:
             with self.db_manager as conn:
