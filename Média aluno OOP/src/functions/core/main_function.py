@@ -6,11 +6,9 @@ student data (name, grades) and persisting it to the database
 via the repository.
 """
 
-from src.classes.Student import Student
-from . ..utils.validations import (
+from ...utils.validations import (
     validate_grade,
-    validate_names, 
-    validate_quantity
+    validate_names
 )
 
 def process_students(students_quantity, way_to_calculate, passing_grade, weights, number_of_marks, repository):
@@ -19,29 +17,33 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
 
     Iterates 'students_quantity' times, prompting the user for a name
     and the required number of grades. It validates this input
-    and then uses the provided repository to create and save each
-    new Student object to the database.
+    and then uses the provided repository to create and save the
+    raw student data directly to the database.
 
     Args:
         students_quantity (int): The total number of new students to process.
-        way_to_calculate (str): The calculation method ("0", "1", or "2").
-        passing_grade (float): The minimum grade required to pass.
-        weights (list): A list of weights (if 'is_weighted' is True).
+        way_to_calculate (str): The calculation method (used to determine grade count).
+        passing_grade (float): Unused here (kept for signature compatibility).
+        weights (list): List of weights (used to determine count if weighted).
         number_of_marks (int): The number of grades per student (if arithmetic).
-        repository (StudentRepository): The repository object for database access.
+        repository (Repository): The repository object for database access.
 
     Returns:
         None
     """
 
-    # This local variable is still useful for determining
-    # the number of marks to collect.
-    is_weighted = way_to_calculate == "1"
+    # 1. Determine exactly how many grades to ask for
+    # We do this once before the loop to keep logic clean.
+    if way_to_calculate == "1":  # Weighted
+        num_marks_to_collect = len(weights)
+    else:
+        # Arithmetic ("0") or Median ("2")
+        num_marks_to_collect = number_of_marks
 
     for i in range(students_quantity): 
         print(f"\n📘 Inserting Student {i+1} of {students_quantity}")
     
-        # Validate student name
+        # 2. Get and Validate Name
         while True:
             name_input = input("Enter student's name: ")
             name, error = validate_names(name_input)
@@ -50,16 +52,9 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
             else:
                 break
 
-        # Determine number of grades to collect
-        if is_weighted:
-            num_marks = len(weights)
-        else:
-            # This works for both Arithmetic ('0') and Median ('2')
-            num_marks = number_of_marks
-
-        # Collect grades
+        # 3. Get and Validate Grades
         marks_input_list = [] 
-        for j in range(num_marks):
+        for j in range(num_marks_to_collect):
             while True:
                 mark_input = input(f"Enter grade {j + 1}: ")
                 mark, error = validate_grade(mark_input)
@@ -69,22 +64,11 @@ def process_students(students_quantity, way_to_calculate, passing_grade, weights
                     marks_input_list.append(mark)
                     break
         
-        # Create the Student object and save it to the database
+        # 4. Save directly to Repository (Phase 3 Logic)
+        # We no longer create a Student object here. We pass raw data.
+        # This avoids the "double validation" issue.
         try:
-            # --- THIS IS THE UPDATED CONSTRUCTOR CALL ---
-            student = Student(
-                student_id=None, # ID will be set by the DB
-                name=name, 
-                passing_grade=passing_grade, 
-                calc_type=way_to_calculate, # We now pass the calc_type
-                weights_marks=weights if is_weighted else [] 
-                # 'is_weighted' argument is removed
-            )
-            
-            student.marks = marks_input_list 
-            repository.add_student(student)
+            repository.add_student(name, marks_input_list)
         
-        except ValueError as e:
-            print(f'❌ Error validating student data: {e}')
         except Exception as e:
             print(f'❌ Unexpected error saving student {name}: {e}')
