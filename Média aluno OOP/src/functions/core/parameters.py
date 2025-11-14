@@ -1,137 +1,94 @@
 """
-Handles the initial parameter setup for the application.
+Handles user input for application parameters.
 
-This module is responsible for the user-facing workflow of gathering
-the initial batch of settings (like student quantity, average type,
-and passing grade) and persisting them to the database using the
-repository.
+This module gathers configuration settings (like calculation type,
+passing grade, and weights) and encapsulates them into a Classroom object.
 """
 
-import json
-import os
+from ...utils.input_handler import get_valid_input
 from ...utils.validations import (
     validate_quantity,
     validate_calculation_type,
-    validate_weights,
     validate_grade,
-    validate_quantity_min_2
+    validate_weights,
+    validate_quantity_min_2,
+    validate_names
 )
+# Importamos a classe para poder instanciá-la aqui
+from ...classes.Classroom import Classroom
 
-
-def get_app_parameters(repo):
+def get_app_parameters():
     """
-    Prompts the user for classroom settings and saves them to the DB.
-
-    This function acts as a setup wizard. It checks if the classroom
-    configuration (calc_type, passing_grade, weights) already exists
-    in the database.
-    
-    - If NOT exists (New DB): It asks the user for the rules, saves
-      them to the 'classroom_config' table, and then asks for the
-      number of students to add immediately.
-    - If exists (Existing DB): It skips the rule setup.
-
-    Args:
-        repo (Repository): The repository instance to interact with the DB.
+    Prompts the user for necessary parameters to set up the Classroom
+    and the data entry session.
 
     Returns:
-        tuple: A tuple containing:
-            (students_quantity (int),
-             way_to_calculate (str),
-             passing_grade (float),
-             weights (list),
-             number_of_marks (int))
+        tuple: (
+            classroom (Classroom): The configured Classroom object.
+            students_quantity (int): Number of students to insert.
+            number_of_marks (int): Number of marks per student (for Arithmetic/Median).
+        )
     """
-    # 1. Get context (Classroom Name) 
-    classroom_name = os.path.basename(repo.db_manager.db_path)
+    print("\n--- ⚙️  Configuration Setup ⚙️  ---")
 
-    # 2. Check if config already exists in DB
-    current_calc_type = repo.get_classroom_config("calc_type")
+    # 1. Get Classroom Name (Optional, but good for the object)
+    # We can validate it just like a student name for simplicity
+    name_input, _ = get_valid_input("Enter the Classroom Name: ", validate_names)
     
-    # Default values (will be overwritten if not found in DB)
+    # 2. How many students to add?
+    students_qty_str, _ = get_valid_input(
+        "How many students do you want to add? ", 
+        validate_quantity
+    )
+    students_quantity = int(students_qty_str)
+
+    # 3. Calculation Method
+    print("\nChoose calculation type:")
+    print("0: Arithmetic Mean (Média Aritmética)")
+    print("1: Weighted Mean (Média Ponderada)")
+    print("2: Median (Mediana)")
+    
+    calc_type, _ = get_valid_input("Type the number of option: ", validate_calculation_type)
+
+    # 4. Passing Grade
+    passing_grade_str, _ = get_valid_input(
+        "Enter the passing grade (0-10): ", 
+        validate_grade
+    )
+    passing_grade = float(passing_grade_str)
+
+    # 5. Specific Logic for Weights vs Quantity
     weights = []
     number_of_marks = 0
-    
-    # --- Scenario A: Configuration already exists (Load mode) ---
-    if current_calc_type is not None:
-        # We just need to read them to return to the main flow
-        # (The repository already has them, but index.py expects returns here for now)
-        way_to_calculate = current_calc_type
-        passing_grade = float(repo.get_classroom_config("passing_grade"))
-        weights = json.loads(repo.get_classroom_config("weights_marks"))
+
+    if calc_type == '1':  # Weighted
+        print("\n⚖️  Weighted Average Selected.")
+        print("Enter weights separated by space (e.g., '2 3 5'). Sum must be 10.")
+        while True:
+            w_input = input("Weights: ")
+            w_list, error = validate_weights(w_input)
+            if error:
+                print(f"❌ {error}")
+            else:
+                weights = w_list
+                break
+        # In weighted, number of marks = number of weights
         number_of_marks = len(weights)
         
-        # We don't ask to add students automatically when loading.
-        # We return 0 so the main loop simply shows the menu.
-        return 0, way_to_calculate, passing_grade, weights, number_of_marks
-
-    # --- Scenario B: Configuration does NOT exist (New DB mode) ---
-    
-    print(f"\n⚙️  Setting up rules for classroom: {classroom_name}")
-
-    # 1. Calculation Type
-    while True:
-        calc_type_input = input(
-            'Would you like to use arithmetic or weighted average? '
-            '(Enter 0 for arithmetic, 1 for weighted, 2 for median): '
+    else:  # Arithmetic or Median
+        qty_marks_str, _ = get_valid_input(
+            "How many grades per student? (min 2): ", 
+            validate_quantity_min_2
         )
-        way_to_calculate, error = validate_calculation_type(calc_type_input)
-        if error:
-            print(f"❌ {error}")
-        else:
-            break
+        number_of_marks = int(qty_marks_str)
 
-    # 2. Weights or Number of Marks
-    if way_to_calculate == "1":
-        while True:
-            weights_input = input(
-                'Enter the weights for each grade, separated by spaces (e.g., 2 3 1 4). '
-                'The total must equal 10: '
-            )
-            weights, error = validate_weights(weights_input)
-            if error:
-                print(f"❌ {error}")
-            else:
-                number_of_marks = len(weights)
-                break
-    else:
-        # For arithmetic (0) or median (2), we create "dummy" weights of 1.0
-        # to define the structure of the grades in the DB.
-        while True:
-            marks_input = input(f"How many grades will the students in '{classroom_name}' have? ")
-            number_of_marks, error = validate_quantity_min_2(marks_input)
-            if error:
-                print(f"❌ {error}")
-            else:
-                weights = [1.0] * number_of_marks
-                break
+    # --- INSTANTIATING THE CLASSROOM ---
+    # Agora criamos o objeto que detém as regras
+    classroom = Classroom(
+        name=name_input,
+        passing_grade=passing_grade,
+        calc_type=calc_type,
+        weights=weights
+    )
 
-    # 3. Passing Grade
-    while True:
-        passing_input = input("Enter the minimum passing grade (0 to 10): ")
-        passing_grade, error = validate_grade(passing_input)
-        if error:
-            print(f"❌ {error}")
-        else:
-            break
-
-    # 4. Save Configuration to DB 
-    print("💾 Saving classroom configuration...")
-    try:
-        repo.set_classroom_config("calc_type", way_to_calculate)
-        repo.set_classroom_config("passing_grade", str(passing_grade))
-        repo.set_classroom_config("weights_marks", json.dumps(weights))
-        print("✅ Configuration saved successfully.")
-    except Exception as e:
-        print(f"❌ Error saving configuration: {e}")
-
-    # 5. Ask for initial students (only for new setup)
-    while True:
-        user_input = input(f'\nHow many students do you want to add to {classroom_name} now? ')
-        students_quantity, error = validate_quantity(user_input)
-        if error:
-            print(f"❌ {error}")
-        else:
-            break
-
-    return students_quantity, way_to_calculate, passing_grade, weights, number_of_marks
+    return classroom, students_quantity, number_of_marks

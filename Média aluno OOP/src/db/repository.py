@@ -3,245 +3,163 @@ Database Repository Module for the Student Grade System.
 
 This module defines the Repository class, which abstracts all
 database interactions (CRUD operations) using a data access layer pattern.
-It is the only part of the application that should directly execute SQL.
+It handles the connection lifecycle via the DatabaseManager context manager
+and maps database rows to Student objects.
 """
 
 import sqlite3
-import json
 from . import queries
 from src.utils.db_connection import DatabaseManager
 from src.classes.Student import Student
 
-
 class Repository:
     """
-    Manages all database operations for Student and Classroom objects.
+    Manages all database operations for Student objects.
 
-    This class handles the connection, cursor management, and translation
-    between Student objects and the SQL database tables using the
-    DatabaseManager context manager.
-
-    Attributes:
-        db_manager (DatabaseManager): The manager for the SQLite database file.
+    Acts as a wrapper around DatabaseManager to provide specific
+    methods for Student CRUD (Create, Read, Update, Delete).
     """
 
     def __init__(self, db_file: str):
         """
-        Initializes the repository and ensures tables are created.
+        Initializes the repository.
 
         Args:
             db_file (str): The path to the SQLite database file.
         """
-        # Use the DatabaseManager instead of manual connection
         self.db_manager = DatabaseManager(db_file)
+        self.conn = None # Will hold the active connection inside a 'with' block
         self._create_tables()
 
-    def _create_tables(self):
-        """
-        Creates the database tables if they do not already exist.
+    # --- Context Manager Protocol ---
+    # Permite que o index.py use "with repo:"
 
-        This is an internal method called during initialization.
-        """
+    def __enter__(self):
+        """Starts the DB connection when entering the 'with' block."""
+        self.conn = self.db_manager.__enter__()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Closes the DB connection when exiting the 'with' block."""
+        self.db_manager.__exit__(exc_type, exc_val, exc_tb)
+        self.conn = None
+
+    # --- Table Setup ---
+
+    def _create_tables(self):
+        """Ensures necessary tables exist using a temporary connection."""
+        # We use a temporary 'with' block here because the main 'with repo'
+        # might not have started yet during __init__.
         try:
-            # Use the context manager for the connection
             with self.db_manager as conn:
                 conn.execute(queries.CREATE_TABLE_STUDENTS)
                 conn.execute(queries.CREATE_TABLE_GRADES)
-                # Ensure the new config table is created
-                conn.execute(queries.CREATE_TABLE_CLASSROOM_CONFIG)
         except sqlite3.Error as e:
-            print(f"Error creating tables: {e}")
+            print(f"❌ Error creating tables: {e}")
 
-    # --- Config Methods (New for Fase 3) ---
+    # --- Helper: Get Cursor ---
 
-    def get_classroom_config(self, key: str) -> str | None:
+    def _get_cursor(self):
         """
-        Fetches a specific configuration value by its key.
+        Returns a cursor from the active connection (inside 'with')
+        or creates a temporary one if used standalone.
+        """
+        if self.conn:
+            return self.conn.cursor()
+        else:
+            # Fallback if methods are called outside "with repo:"
+            # (Not recommended for the main loop, but good for safety)
+            return self.db_manager.__enter__().cursor()
 
+    # --- CRUD Operations ---
+
+    def add_student(self, student: Student):
+        """
+        Saves a Student object and their marks to the database.
+        
         Args:
-            key (str): The name of the configuration key (e.g., "calc_type").
-
-        Returns:
-            str or None: The stored value as a string, or None if not found. 
+            student (Student): The student object to save.
+        """
+        cursor = self._get_cursor()
+        try:
+            # 1. Insert Student
+            cursor.execute(queries.INSERT_STUDENT, (student.name,))
+            student_id = cursor.lastrowid
             
-            Possible keys:
-            - 0 for Arithmetic (also the default option),
-            - 1 for Weighted,
-            - 2 for Median
-        """
-        try:
-            with self.db_manager as conn:
-                cursor = conn.execute(queries.SELECT_CONFIG, (key,))
-                result = cursor.fetchone()
-                # Return the value (result[0]) if a result was found
-                return result[0] if result else None
+            # 2. Insert Marks (Relational)
+            if student.marks:
+                # Prepare a list of tuples: (student_id, mark_value)
+                grades_data = [(student_id, mark) for mark in student.marks]
+                cursor.executemany(queries.INSERT_GRADE, grades_data)
+            
+            # Commit is handled by the Context Manager (__exit__)
+            
         except sqlite3.Error as e:
-            print(f"Error getting config for key {key}: {e}")
-            return None
+            print(f"❌ Error adding student: {e}")
+            raise
 
-    def set_classroom_config(self, key: str, value: str):
+    def get_all_students(self):
         """
-        Sets (Inserts or Updates) a configuration value.
-
-        This performs an "UPSERT" operation: it attempts to UPDATE
-        a key, and if it doesn't exist (rowcount = 0), it INSERTS it.
-
-        Args:
-            key (str): The key to set (e.g., "passing_grade").
-            value (str): The value to store (must be a string).
-        """
-        try:
-            with self.db_manager as conn:
-                # First, try to update the key
-                cursor = conn.execute(queries.UPDATE_CONFIG, (value, key))
-                # If no rows were affected, the key doesn't exist
-                if cursor.rowcount == 0:
-                    # Insert it instead
-                    conn.execute(queries.INSERT_CONFIG, (key, value))
-        except sqlite3.Error as e:
-            print(f"Error setting config for key {key}: {e}")
-
-    # --- Student/Grade Methods (Refactored for Fase 3) ---
-
-    def add_student(self, name: str, marks: list[float]):
-        """
-        Adds a new Student to the database (simplified).
-
-        Classroom rules (passing_grade, weights) are no longer
-        saved with the student, as they are in 'classroom_config'.
-
-        Args:
-            name (str): The student's name.
-            marks (list[float]): The list of marks.
+        Retrieves all students and their grades, returning hydrated objects.
 
         Returns:
-            int or None: The new student's ID, or None on failure.
+            list[Student]: List of Student objects with IDs, names, and marks.
         """
+        cursor = self._get_cursor()
+        students_map = {} # Dictionary to group marks by student_id
+
         try:
-            with self.db_manager as conn:
-                # 1. Insert the student (name only) using the refactored query
-                cursor = conn.cursor()
-                cursor.execute(queries.INSERT_STUDENT, (name,))
-                student_db_id = cursor.lastrowid
+            # 1. Get all students
+            cursor.execute(queries.SELECT_ALL_STUDENTS)
+            student_rows = cursor.fetchall()
 
-                # 2. Insert the grades (mark_value only)
-                if marks:
-                    # Prepare data for executemany (more efficient)
-                    grades_data = [(student_db_id, mark) for mark in marks]
-                    conn.executemany(queries.INSERT_GRADE, grades_data)
+            for row in student_rows:
+                s_id, name = row
+                # Instantiate the Dumb Class (Data Container)
+                student = Student(student_id=s_id, name=name)
+                students_map[s_id] = student
 
-                print(f"Student {name} added with ID {student_db_id}.")
-                return student_db_id
+            # 2. Get all grades
+            # Assuming queries.SELECT_ALL_GRADES returns (student_id, mark_value)
+            cursor.execute(queries.SELECT_ALL_GRADES)
+            grade_rows = cursor.fetchall()
+
+            for row in grade_rows:
+                s_id, mark = row
+                if s_id in students_map:
+                    students_map[s_id].marks.append(mark)
+
+            return list(students_map.values())
 
         except sqlite3.Error as e:
-            # Rollback is handled automatically by DatabaseManager's __exit__
-            print(f"Error adding student {name}: {e}")
-            return None
-
-    def get_all_students(self) -> list[Student]:
-        """
-        Fetches all students and reconstructs them using classroom config.
-
-        *** This method contains the critical bug fix for Fase 3 ***
-        It reads from 'classroom_config' first, then instantiates
-        Student objects using the new constructor signature.
-
-        Returns:
-            list[Student]: A list of all Student objects.
-        """
-        student_list = []
-        try:
-            # 1. Get classroom config from the DB
-            calc_type = self.get_classroom_config("calc_type")
-            passing_grade_str = self.get_classroom_config("passing_grade")
-            weights_marks_str = self.get_classroom_config("weights_marks")
-
-            # 2. Validate config
-            if not all((calc_type, passing_grade_str, weights_marks_str)):
-                print("\n[CRITICAL ERROR] Classroom config not found in DB.")
-                print("Delete the .db file and restart the app to set up.")
-                return []  # Return empty list to prevent crash
-
-            # 3. Parse config values
-            passing_grade = float(passing_grade_str)
-            weights_marks = json.loads(weights_marks_str)
-
-            with self.db_manager as conn:
-                # 4. Get all students (id, name)
-                student_rows = conn.execute(queries.SELECT_ALL_STUDENTS).fetchall()
-
-                for row in student_rows:
-                    student_db_id, name = row
-
-                    # 5. Fetch the corresponding grades for this student
-                    cursor_grades = conn.execute(
-                        queries.SELECT_GRADES_FOR_STUDENT, (student_db_id,)
-                    )
-                    # Unpack list of tuples: [(8.0,), (7.5,)] -> [8.0, 7.5]
-                    marks = [g[0] for g in cursor_grades.fetchall()]
-
-                    # 6. Re-create the Student object using the NEW constructor
-                    # This fixes the TypeError bug from Fase 2.
-                    student = Student(
-                        student_id=student_db_id,
-                        name=name,
-                        marks=marks,
-                        calc_type=calc_type,
-                        passing_grade=passing_grade,
-                        weights_marks=weights_marks,
-                    )
-                    student_list.append(student)
-
-            return student_list
-
-        except (sqlite3.Error, json.JSONDecodeError, TypeError) as e:
-            print(f"Error fetching students or parsing config: {e}")
-            return []  # Return an empty list on failure
+            print(f"❌ Error retrieving students: {e}")
+            return []
 
     def update_student(self, student: Student):
         """
-        Updates an existing student in the database (simplified).
-
-        This now only updates the student's name and grades, as
-        classroom rules are no longer stored here.
-
-        Args:
-            student (Student): The Student object with updated data.
+        Updates a student's name and overwrites their grades.
         """
+        cursor = self._get_cursor()
         try:
-            with self.db_manager as conn:
-                # 1. Update the 'students' table (name only)
-                conn.execute(queries.UPDATE_STUDENT_DATA, (
-                    student.name,
-                    student.student_id
-                ))
+            # 1. Update Name
+            cursor.execute(queries.UPDATE_STUDENT_DATA, (student.name, student.student_id))
 
-                # 2. Delete ALL old grades for this student
-                conn.execute(queries.DELETE_GRADES_FOR_STUDENT, (student.student_id,))
-
-                # 3. Re-insert the (now updated) grades (mark_value only)
-                if student.marks:
-                    grades_data = [(student.student_id, mark) for mark in student.marks]
-                    conn.executemany(queries.INSERT_GRADE, grades_data)
-
-                print(f"Student {student.name} (ID: {student.student_id}) updated.")
-
+            # 2. Update Grades (Strategy: Delete all old, insert all new)
+            cursor.execute(queries.DELETE_GRADES_FOR_STUDENT, (student.student_id,))
+            
+            if student.marks:
+                grades_data = [(student.student_id, mark) for mark in student.marks]
+                cursor.executemany(queries.INSERT_GRADE, grades_data)
+                
         except sqlite3.Error as e:
-            print(f"Error updating student {student.name}: {e}")
+            print(f"❌ Error updating student: {e}")
+            raise
 
     def delete_student(self, student_id: int):
-        """
-        Deletes a student from the database using their ID.
-
-        'ON DELETE CASCADE' handles deleting associated grades.
-
-        Args:
-            student_id (int): The ID of the student to delete.
-        """
+        """Deletes a student (Cascading delete handles grades)."""
+        cursor = self._get_cursor()
         try:
-            with self.db_manager as conn:
-                conn.execute(queries.DELETE_STUDENT_BY_ID, (student_id,))
-                print(f"Student (ID: {student_id}) deleted from database.")
-
+            cursor.execute(queries.DELETE_STUDENT_BY_ID, (student_id,))
         except sqlite3.Error as e:
-            print(f"Error deleting student (ID: {student_id}): {e}")
+            print(f"❌ Error deleting student: {e}")
+            raise

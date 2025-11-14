@@ -53,6 +53,11 @@ INSERT_GRADE = "INSERT INTO grades (student_id, mark_value) VALUES (?, ?);"
 
 SELECT_ALL_STUDENTS = "SELECT id, name FROM students;"
 
+# --- A LINHA QUE FALTAVA ---
+# Esta query busca TODAS as notas do banco de uma só vez.
+# O Repository usa isso para hidratar a lista de alunos eficientemente.
+SELECT_ALL_GRADES = "SELECT student_id, mark_value FROM grades;"
+
 # SELECT_GRADES_FOR_STUDENT no longer selects 'weight_value'.
 SELECT_GRADES_FOR_STUDENT = "SELECT mark_value FROM grades WHERE student_id = ?;"
 
