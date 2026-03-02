@@ -7,9 +7,6 @@ def password_generator(len_pass = 8):
     punt_options = string.punctuation
 
     options = ascii_options + number_options + punt_options
-
-    
-
     password_user = ""
     
     for i in range (0, len_pass): 
