@@ -23,8 +23,6 @@ else:
     print("Entrada inválida!")
     quit()
 
-## print("Sua nova senha é:", password_generator(len_pass = choice_user))
-
 response = password_generator(len_pass = choice_user)
 
 print (f"Sua nova senha é:\n ", {response})
